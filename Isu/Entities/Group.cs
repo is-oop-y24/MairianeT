@@ -6,6 +6,7 @@ namespace Isu.Entities
 {
     public class Group
     {
+        private const int MaxStudentsCount = 30;
         public Group()
         {
         }
