@@ -1,6 +1,7 @@
 using Isu.Services;
 using Isu.Tools;
 using NUnit.Framework;
+using Isu.Entities;
 
 namespace Isu.Tests
 {
@@ -11,22 +12,29 @@ namespace Isu.Tests
         [SetUp]
         public void Setup()
         {
-            //TODO: implement
-            _isuService = null;
+            _isuService = new IsuService();
         }
 
         [Test]
         public void AddStudentToGroup_StudentHasGroupAndGroupContainsStudent()
         {
-            Assert.Fail();
+            Group third = _isuService.AddGroup(new GroupName("M3203"));
+            Student Ivan = _isuService.AddStudent(third, "Ivan");
+
+            Assert.AreEqual(Ivan.Group(), third);
+            Assert.AreEqual(Ivan, third.FindStudent("Ivan"));
         }
 
         [Test]
         public void ReachMaxStudentPerGroup_ThrowException()
         {
+            Group zero = _isuService.AddGroup(new GroupName(3, 0));
             Assert.Catch<IsuException>(() =>
             {
-                
+                for (int i = 0; i < 35; i++)
+                {
+                    Student current = _isuService.AddStudent(zero, "Vasya");
+                }
             });
         }
 
@@ -35,17 +43,20 @@ namespace Isu.Tests
         {
             Assert.Catch<IsuException>(() =>
             {
-
+                Group sixth = _isuService.AddGroup(new GroupName("N2306"));
             });
         }
 
         [Test]
         public void TransferStudentToAnotherGroup_GroupChanged()
         {
-            Assert.Catch<IsuException>(() =>
-            {
+            Group second = _isuService.AddGroup(new GroupName("M3102"));
+            Student Ann = _isuService.AddStudent(second, "Ann");
 
-            });
+            Assert.AreEqual(Ann.Group(), second);
+            Group first = _isuService.AddGroup(new GroupName("M3101"));
+            _isuService.ChangeStudentGroup(Ann, first);
+            Assert.AreEqual(Ann.Group(), first);
         }
     }
 }

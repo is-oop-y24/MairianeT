@@ -1,54 +1,131 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Isu.Entities;
 
 namespace Isu.Services
 {
     public class IsuService : IIsuService
     {
-        public Group AddGroup(string name)
-        {
+        private List<CourseNumber> courses = new List<CourseNumber>();
+        private List<Group> groups = new List<Group>();
+        private List<Student> students = new List<Student>();
 
+        public Group AddGroup(GroupName name)
+        {
+            var newGroup = new Group(name);
+            int isNewCourse = 1;
+            foreach (CourseNumber course in courses)
+            {
+                if (course.GetCourse() == newGroup.Course())
+                {
+                    isNewCourse = 0;
+                }
+            }
+
+            var newCourse = new CourseNumber(name.GroupCourse());
+            if (isNewCourse == 1) courses.Add(newCourse);
+            newCourse.AddGroup(newGroup);
+
+            groups.Add(newGroup);
+            return newGroup;
         }
 
         public Student AddStudent(Group group, string name)
         {
-            throw new NotImplementedException();
+            var newStudent = new Student(name, group);
+            students.Add(newStudent);
+            group.AddStudent(newStudent);
+            return newStudent;
         }
 
         public void ChangeStudentGroup(Student student, Group newGroup)
         {
-            throw new NotImplementedException();
+            Group oldGroup = student.Group();
+            student.ChangeGroupe(newGroup);
+            oldGroup.RemoveStudent(student);
+            newGroup.AddStudent(student);
         }
 
-        public Group FindGroup(string groupName)
+        public Group FindGroup(GroupName groupName)
         {
-            throw new NotImplementedException();
+            foreach (Group group in groups)
+            {
+                if (group.GroupName() == groupName)
+                {
+                    return group;
+                }
+            }
+
+            return null;
         }
 
         public List<Group> FindGroups(CourseNumber courseNumber)
         {
-            throw new NotImplementedException();
+            var courseGroups = new List<Group>();
+            foreach (Group group in groups)
+            {
+                if (group.Course() == courseNumber.GetCourse())
+                {
+                    courseGroups.Add(group);
+                }
+            }
+
+            return courseGroups;
         }
 
         public Student FindStudent(string name)
         {
-            throw new NotImplementedException();
+            foreach (Student student in students)
+            {
+                if (student.Name() == name)
+                {
+                    return student;
+                }
+            }
+
+            return null;
         }
 
-        public List<Student> FindStudents(string groupName)
+        public List<Student> FindStudents(GroupName groupName)
         {
-            throw new NotImplementedException();
+            var groupStudents = new List<Student>();
+            foreach (Student student in students)
+            {
+                if (student.Group().GroupName() == groupName)
+                {
+                    groupStudents.Add(student);
+                }
+            }
+
+            return groupStudents;
         }
 
         public List<Student> FindStudents(CourseNumber courseNumber)
         {
-            throw new NotImplementedException();
+            var courseStudents = new List<Student>();
+            foreach (Student student in students)
+            {
+                if (student.Course() == courseNumber.GetCourse())
+                {
+                    courseStudents.Add(student);
+                }
+            }
+
+            return courseStudents;
         }
 
         public Student GetStudent(int id)
         {
-            throw new NotImplementedException();
+            foreach (Student student in students)
+            {
+                if (student.Id() == id)
+                {
+                    return student;
+                }
+            }
+
+            return null;
         }
     }
 }
