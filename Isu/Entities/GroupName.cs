@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Isu.Tools;
 
 namespace Isu.Entities
 {
@@ -25,8 +25,8 @@ namespace Isu.Entities
 
         public GroupName(string name)
         {
-            if (name[0] != 'M' || name[1] != '3') throw new ArgumentException("The group name must match the M3YXX template");
-            if (!char.IsDigit(name[2]) || !char.IsDigit(name[3]) || !char.IsDigit(name[4])) throw new ArgumentOutOfRangeException("Incorrect group name");
+            if (name[0] != 'M' || name[1] != '3') throw new IsuException("Invalid group name");
+            if (!char.IsDigit(name[2]) || !char.IsDigit(name[3]) || !char.IsDigit(name[4])) throw new IsuException("Incorrect group name");
             _name = name;
             _course = name[2] - '0';
             _number = ((name[3] - '0') * 10) + name[4] - '0';

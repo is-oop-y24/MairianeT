@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Isu.Tools;
 
 namespace Isu.Entities
 {
@@ -50,7 +49,7 @@ namespace Isu.Entities
         {
             if (studentsCount >= MaxStudentsCount)
             {
-                throw new Exception("Maximum number of students is 30");
+                throw new IsuException("Maximum number of students is 30");
             }
         }
 
