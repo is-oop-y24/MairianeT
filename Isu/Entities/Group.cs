@@ -6,7 +6,6 @@ namespace Isu.Entities
     public class Group
     {
         private const int MaxStudentsCount = 30;
-        private int studentsCount = 0;
         private List<Student> students = new List<Student>();
         private int courseNumber;
         private GroupName groupName;
@@ -29,25 +28,23 @@ namespace Isu.Entities
 
         public int ID()
         {
-            return studentsCount + 1;
+            return students.Count;
         }
 
         public void AddStudent(Student name)
         {
             IsGroupFull();
             students.Add(name);
-            studentsCount++;
         }
 
         public bool RemoveStudent(Student name)
         {
-            studentsCount--;
             return students.Remove(name);
         }
 
         public void IsGroupFull()
         {
-            if (studentsCount >= MaxStudentsCount)
+            if (students.Count >= MaxStudentsCount)
             {
                 throw new IsuException("Maximum number of students is 30");
             }

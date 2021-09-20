@@ -16,7 +16,7 @@ namespace Isu.Entities
             _name = name;
             this.group = group;
             courseNumber = group.Course();
-            _id = group.GroupName().GroupNumber() + courseNumber + group.ID();
+            _id = (group.GroupName().GroupNumber() * 100) + (courseNumber * 1000) + group.ID();
         }
 
         public string Name()
