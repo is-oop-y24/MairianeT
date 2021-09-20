@@ -28,7 +28,7 @@ namespace Isu.Tests
         [Test]
         public void ReachMaxStudentPerGroup_ThrowException()
         {
-            Group zero = _isuService.AddGroup(new GroupName(3, 0));
+            Group zero = _isuService.AddGroup(new GroupName("M3300"));
             Assert.Catch<IsuException>(() =>
             {
                 for (int i = 0; i < 35; i++)

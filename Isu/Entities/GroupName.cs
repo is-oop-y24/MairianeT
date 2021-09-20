@@ -9,21 +9,6 @@ namespace Isu.Entities
         private int _course;
         private string _name;
 
-        public GroupName(int number, int course)
-        {
-            _number = number;
-            _course = course;
-            _name = "M3" + course;
-            if (number >= 0 && number < 10)
-            {
-                _name += "0" + number;
-            }
-            else
-            {
-                _name += number;
-            }
-        }
-
         public GroupName(string name)
         {
             if (name[0] != 'M' || name[1] != '3') throw new IsuException("Invalid group name");
