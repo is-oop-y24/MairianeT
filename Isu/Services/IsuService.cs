@@ -14,17 +14,17 @@ namespace Isu.Services
         public Group AddGroup(GroupName name)
         {
             var newGroup = new Group(name);
-            int isNewCourse = 1;
+            bool isNewCourse = true;
             foreach (CourseNumber course in courses)
             {
                 if (course.GetCourse() == newGroup.Course())
                 {
-                    isNewCourse = 0;
+                    isNewCourse = false;
                 }
             }
 
             var newCourse = new CourseNumber(name.GroupCourse());
-            if (isNewCourse == 1) courses.Add(newCourse);
+            if (isNewCourse) courses.Add(newCourse);
             newCourse.AddGroup(newGroup);
 
             groups.Add(newGroup);
