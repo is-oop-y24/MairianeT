@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Isu.Entities
+﻿namespace Isu.Entities
 {
     public class Student
     {
@@ -16,7 +12,7 @@ namespace Isu.Entities
             _name = name;
             this.group = group;
             courseNumber = group.Course();
-            _id = (group.GroupName().GroupNumber() * 100) + (courseNumber * 1000) + group.StudentNumber();
+            _id = (group.GroupName().GroupNumber() * 100) + (courseNumber * 10000) + group.StudentNumber();
         }
 
         public string Name()
