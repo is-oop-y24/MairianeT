@@ -20,6 +20,7 @@ namespace Isu.Services
                 if (course.GetCourse() == newGroup.Course())
                 {
                     isNewCourse = false;
+                    break;
                 }
             }
 
