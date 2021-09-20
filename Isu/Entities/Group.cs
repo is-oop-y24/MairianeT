@@ -26,9 +26,9 @@ namespace Isu.Entities
             return groupName;
         }
 
-        public int ID()
+        public int StudentNumber()
         {
-            return students.Count;
+            return students.Count + 1;
         }
 
         public void AddStudent(Student name)
