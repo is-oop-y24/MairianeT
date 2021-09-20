@@ -1,4 +1,5 @@
-﻿using Isu.Tools;
+﻿using System;
+using Isu.Tools;
 
 namespace Isu.Entities
 {
@@ -28,8 +29,8 @@ namespace Isu.Entities
             if (name[0] != 'M' || name[1] != '3') throw new IsuException("Invalid group name");
             if (!char.IsDigit(name[2]) || !char.IsDigit(name[3]) || !char.IsDigit(name[4])) throw new IsuException("Incorrect group name");
             _name = name;
-            _course = name[2] - '0';
-            _number = ((name[3] - '0') * 10) + name[4] - '0';
+            _course = Convert.ToInt32(name[2]);
+            _number = (Convert.ToInt32(name[3]) * 10) + Convert.ToInt32(name[4]);
         }
 
         public int GroupNumber()
