@@ -10,7 +10,10 @@ namespace Shops.Entities
 
         public Product(string name, int price)
         {
-            if (price < 0) throw new Exception("Invalid product price");
+            if (price < 0)
+            {
+                throw new Exception("Invalid product price");
+            }
             else
             {
                 _price = price;
@@ -21,7 +24,7 @@ namespace Shops.Entities
 
         public bool AreEqual(Product product)
         {
-            if (_name == product.Name)
+            if (_name == product.Name())
             {
                 return true;
             }
@@ -31,5 +34,26 @@ namespace Shops.Entities
             }
         }
 
+        public void ChangePrice(int newPrice)
+        {
+            if (newPrice >= 0)
+            {
+                _price = newPrice;
+            }
+            else
+            {
+                throw new Exception("Invalid product price");
+            }
+        }
+
+        public int Price()
+        {
+            return _price;
+        }
+
+        public string Name()
+        {
+            return _name;
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace Shops.Entities
     {
         private int _balance;
         private string _name;
-        
+
         public Customer(string name, int balance)
         {
             _balance = balance;
@@ -20,6 +20,7 @@ namespace Shops.Entities
             {
                 _balance += money;
             }
+
             return _balance;
         }
 
@@ -32,8 +33,18 @@ namespace Shops.Entities
             }
             else
             {
-                return -1; //not enough money on balance
+                throw new Exception("Not enough money on balance");
             }
+        }
+
+        public bool IsBuyProduct(Product product, Shop shop)
+        {
+            if (_balance >= product.Price())
+            {
+                return shop.IsBuyABatch(product, 1);
+            }
+
+            return false;
         }
 
         public int Balance()
