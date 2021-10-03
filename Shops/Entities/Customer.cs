@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Shops.Entities
 {
-    class Customer
+    public class Customer
     {
         private int _balance;
         private string _name;
-
+        
         public Customer(string name, int balance)
         {
             _balance = balance;

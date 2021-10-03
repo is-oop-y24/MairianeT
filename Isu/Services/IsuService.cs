@@ -8,6 +8,7 @@ namespace Isu.Services
         private List<CourseNumber> courses = new List<CourseNumber>();
         private List<Group> groups = new List<Group>();
         private List<Student> students = new List<Student>();
+        private Test test;
 
         public Group AddGroup(GroupName name)
         {

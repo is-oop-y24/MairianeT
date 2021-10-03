@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Shops.Entities;
 
 namespace Shops.Services
 {
-    class ShopManager
+    public class ShopManager : IShopManager
     {
         private List<Shop> shops = new List<Shop>;
         private List<Product> products = new List<Product>;
@@ -53,7 +52,7 @@ namespace Shops.Services
             }
         }
 
-        public Shop FindShop(int id)
+        /*public Shop FindShop(int id)
         {
             foreach (ShopManager shop in shops)
             {
@@ -68,7 +67,7 @@ namespace Shops.Services
         public void RemoveShop(Shop shop)
         {
             shops.Remove(shop);
-        }
+        }*/
 
     }
 }

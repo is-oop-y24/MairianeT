@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Shops.Entities
 {
-    class Product
+    public class Product
     {
         private int _price;
         private string _name;
