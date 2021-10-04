@@ -9,7 +9,7 @@ namespace Shops.Services
         Product AddProduct(string name, int price);
         Shop FindShop(int id);
         Shop CheapestPurchase(Product product, int number);
-        void ProductPurchase(Customer customer, Product product, int number);
+        void ProductPurchase(Customer customer, Product product, Shop shop, int number);
         void RemoveShop(Shop shop);
     }
 }

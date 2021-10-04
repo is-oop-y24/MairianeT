@@ -46,6 +46,11 @@ namespace Shops.Services
             throw new System.NotImplementedException();
         }
 
+        public void ProductPurchase(Customer customer, Product product, int number)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void RemoveShop(Shop shop)
         {
             shops.Remove(shop);
@@ -69,7 +74,7 @@ namespace Shops.Services
 
         public void ProductPurchase(Customer customer, Product product, Shop shop, int number)
         {
-            customer.SpendMoney(shop.BatchCost(product, number)); 
+            customer.SpendMoney(shop.BatchCost(product, number));
             shop.BuyABatch(product, number);
         }
     }

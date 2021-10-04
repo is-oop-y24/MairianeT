@@ -40,7 +40,8 @@ namespace Shops.Entities
         {
             if (_balance >= product.Price() * number)
             {
-                return shop.IsBuyABatch(product, number);
+                shop.BuyABatch(product, number);
+                return true;
             }
 
             return false;

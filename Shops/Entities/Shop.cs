@@ -72,7 +72,7 @@ namespace Shops.Entities
             return batchCost;
         }
 
-        public bool isProductInShop(Product product)
+        public bool IsProductInShop(Product product)
         {
             foreach (Product curProduct in products)
             {

@@ -6,12 +6,12 @@ namespace Shops.Tests
 {
     public class ShopTests
     {
-        private IShopMeneger _shopManager;
+        private IShopManager _shopManager;
 
         [SetUp]
         public void SetUp()
         {
-            _shopManager = new IShopMeneger();
+            _shopManager = new ShopManager();
         }
 
         [Test]
@@ -34,12 +34,12 @@ namespace Shops.Tests
             int chocolateNumber = 100;
             shop.AddProduct(product1, chocolateNumber);
             
-            Assert.AreEqual(chocolatePrice, shop.GetProduct().Price());
+            Assert.AreEqual(chocolatePrice, shop.GetProduct(product1.Name()).Price());
             
             int newChocolatePrice = 45;
-            shop.GetProduct(product1).ChangePrice(newChocolatePrice);
+            shop.GetProduct(product1.Name()).ChangePrice(newChocolatePrice);
             
-            Assert.AreEqual(newChocolatePrice, shop.GetProduct(product1).Price());
+            Assert.AreEqual(newChocolatePrice, shop.GetProduct(product1.Name()).Price());
         }
 
         public void FindCheapestShop()
