@@ -9,5 +9,6 @@ namespace Shops.Services
         Product AddProduct(string name, int price);
         Shop CheapestPurchase(Product product, int number);
         bool IsProductPurchase(Customer person, Product product, Shop shop, int number);
+        void AddProductToShop(Shop shop, Product product, int number);
     }
 }

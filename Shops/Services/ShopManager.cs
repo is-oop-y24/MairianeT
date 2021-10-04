@@ -62,5 +62,10 @@ namespace Shops.Services
         {
             return shop.IsBuyProduct(product, person, number);
         }
+
+        public void AddProductToShop(Shop shop, Product product, int number)
+        {
+            shop.AddProduct(product, number);
+        }
     }
 }

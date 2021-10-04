@@ -21,7 +21,7 @@ namespace Shops.Tests
             int chocolatePrice = 50;
             Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice);
             int chocolateNumber = 100;
-            shop.AddProduct(product1, chocolateNumber);
+            _shopManager.AddProductToShop(shop, product1, chocolateNumber);
 
             Assert.IsTrue(shop.IsProductInShop(product1));
         }
