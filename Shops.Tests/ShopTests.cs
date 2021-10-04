@@ -68,24 +68,24 @@ namespace Shops.Tests
         public void Sopping()
         {
             Shop shop = _shopManager.AddShop("Prisma", "Transport line, 4");
-            int chocolatePrice = 50;
+            const int chocolatePrice = 50;
             Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice);
-            int startChocolateNumber = 100;
+            const int startChocolateNumber = 100;
             shop.AddProduct(product1, startChocolateNumber);
-            int startBalance = 500;
-            Customer person = new Customer("Ivan", startBalance);
-            int chocolateNumber = 5;
+            const int startBalance = 500;
+            var person = new Customer("Ivan", startBalance);
             
-            Assert.IsTrue(person.IsBuyProduct(product1, shop, chocolateNumber)); // enough money, enough number
+            int chocolateNumber = 5;
+            Assert.IsTrue(_shopManager.IsProductPurchase(person, product1, shop, chocolateNumber)); // enough money, enough number
             chocolateNumber = 20;
-            Assert.IsFalse(person.IsBuyProduct(product1, shop, chocolateNumber)); // not enough money, enough number
+            Assert.IsFalse(_shopManager.IsProductPurchase(person, product1, shop, chocolateNumber)); // not enough money, enough number
             int newMoney = 5000;
             person.AddMoney(newMoney);
             chocolateNumber = 120;
-            Assert.IsFalse(person.IsBuyProduct(product1, shop, chocolateNumber)); // enough money, not enough number
+            Assert.IsFalse(_shopManager.IsProductPurchase(person, product1, shop, chocolateNumber)); // enough money, not enough number
 
             chocolateNumber = 10;
-            _shopManager.ProductPurchase(person, product1, shop, chocolateNumber);
+            Assert.IsTrue(_shopManager.IsProductPurchase(person, product1, shop, chocolateNumber));
             
             Assert.AreEqual(startBalance + newMoney - chocolateNumber * chocolatePrice, person.Balance());
             Assert.AreEqual(startChocolateNumber - chocolateNumber, shop.ProductNumber(product1));

@@ -19,11 +19,6 @@ namespace Shops.Entities
             _address = address;
         }
 
-        public bool AreEqual(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void AddProduct(Product newProduct, int number)
         {
             int index = -1;
@@ -32,6 +27,7 @@ namespace Shops.Entities
                 if (product.AreEqual(newProduct))
                 {
                     index = products.IndexOf(product);
+                    break;
                 }
             }
 
@@ -46,21 +42,17 @@ namespace Shops.Entities
             }
         }
 
-        public void BuyABatch(Product product, int number)
+        public bool IsBuyABatch(Product product, int number)
         {
             int index = products.IndexOf(product);
-            if (index >= 0)
-            {
-                if (numbers[index] >= number)
-                {
-                    numbers[index] -= number;
-                    if (numbers[index] == 0)
-                    {
-                        numbers.RemoveAt(index);
-                        products.RemoveAt(index);
-                    }
-                }
-            }
+            if (index < 0) return false;
+            if (numbers[index] < number) return false;
+            numbers[index] -= number;
+            if (numbers[index] != 0) return true;
+            numbers.RemoveAt(index);
+            products.RemoveAt(index);
+
+            return true;
         }
 
         public int BatchCost(Product product, int number)
@@ -102,6 +94,14 @@ namespace Shops.Entities
         {
             int index = products.IndexOf(product);
             return numbers[index];
+        }
+
+        public bool IsBuyProduct(Product product, Customer person, int number)
+        {
+            if (person.Balance() < product.Price() * number) return false;
+            if (!IsBuyABatch(product, number)) return false;
+            person.SpendMoney(product.Price() * number);
+            return true;
         }
 
         public int Id()

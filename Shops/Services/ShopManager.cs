@@ -15,8 +15,7 @@ namespace Shops.Services
 
         public Shop AddShop(string name, string address)
         {
-            var newShop = new Shop(name, address, shopsId);
-            shopsId++;
+            var newShop = new Shop(name, address, shopsId++);
             shops.Add(newShop);
             return newShop;
         }
@@ -28,22 +27,9 @@ namespace Shops.Services
             return newProduct;
         }
 
-        public Shop FindShop(int id)
+        public void AddProductToShop(Product newProduct, int number, Shop shop)
         {
-            foreach (Shop shop in shops)
-            {
-                if (shop.AreEqual(id))
-                {
-                    return shop;
-                }
-            }
-
-            return null;
-        }
-
-        public void AddProductToShop(Product newProduct, int number)
-        {
-            throw new System.NotImplementedException();
+            shop.AddProduct(newProduct, number);
         }
 
         public void ProductPurchase(Customer customer, Product product, int number)
@@ -72,10 +58,9 @@ namespace Shops.Services
             return cheapShop;
         }
 
-        public void ProductPurchase(Customer customer, Product product, Shop shop, int number)
+        public bool IsProductPurchase(Customer person, Product product, Shop shop, int number)
         {
-            customer.SpendMoney(shop.BatchCost(product, number));
-            shop.BuyABatch(product, number);
+            return shop.IsBuyProduct(product, person, number);
         }
     }
 }
