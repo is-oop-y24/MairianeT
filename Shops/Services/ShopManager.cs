@@ -67,14 +67,10 @@ namespace Shops.Services
             return cheapShop;
         }
 
-        public void ProductPurchase(Customer customer, Product product, int number)
+        public void ProductPurchase(Customer customer, Product product, Shop shop, int number)
         {
-            Shop shop = CheapestPurchase(product, number);
-            if (shop != null)
-            {
-                customer.SpendMoney(shop.BatchCost(product, number));
-                shop.IsBuyABatch(product, number);
-            }
+            customer.SpendMoney(shop.BatchCost(product, number)); 
+            shop.BuyABatch(product, number);
         }
     }
 }

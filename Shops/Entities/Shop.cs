@@ -46,16 +46,21 @@ namespace Shops.Entities
             }
         }
 
-        public bool IsBuyABatch(Product product, int number)
+        public void BuyABatch(Product product, int number)
         {
             int index = products.IndexOf(product);
-            if (index < 0) return false;
-            if (numbers[index] < number) return false;
-            numbers[index] -= number;
-            if (numbers[index] != 0) return true;
-            numbers.RemoveAt(index);
-            products.RemoveAt(index);
-            return true;
+            if (index >= 0)
+            {
+                if (numbers[index] >= number)
+                {
+                    numbers[index] -= number;
+                    if (numbers[index] == 0)
+                    {
+                        numbers.RemoveAt(index);
+                        products.RemoveAt(index);
+                    }
+                }
+            }
         }
 
         public int BatchCost(Product product, int number)
@@ -67,7 +72,7 @@ namespace Shops.Entities
             return batchCost;
         }
 
-        public bool IsProductInShop(Product product)
+        public bool isProductInShop(Product product)
         {
             foreach (Product curProduct in products)
             {
@@ -91,6 +96,12 @@ namespace Shops.Entities
             }
 
             return null;
+        }
+
+        public int ProductNumber(Product product)
+        {
+            int index = products.IndexOf(product);
+            return numbers[index];
         }
 
         public int Id()
