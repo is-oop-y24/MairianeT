@@ -67,6 +67,32 @@ namespace Shops.Entities
             return batchCost;
         }
 
+        public bool IsProductInShop(Product product)
+        {
+            foreach (Product curProduct in products)
+            {
+                if (product.AreEqual(curProduct))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public Product GetProduct(string name)
+        {
+            foreach (Product product in products)
+            {
+                if (product.Name() == name)
+                {
+                    return product;
+                }
+            }
+
+            return null;
+        }
+
         public int Id()
         {
             return _id;

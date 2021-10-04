@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Shops.Entities;
 
 namespace Shops.Services
@@ -22,6 +21,13 @@ namespace Shops.Services
             return newShop;
         }
 
+        public Product AddProduct(string name, int price)
+        {
+            var newProduct = new Product(name, price);
+            products.Add(newProduct);
+            return newProduct;
+        }
+
         public Shop FindShop(int id)
         {
             foreach (Shop shop in shops)
@@ -33,6 +39,11 @@ namespace Shops.Services
             }
 
             return null;
+        }
+
+        public void AddProductToShop(Product newProduct, int number)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void RemoveShop(Shop shop)
