@@ -36,11 +36,11 @@ namespace Shops.Entities
             }
         }
 
-        public bool IsBuyProduct(Product product, Shop shop)
+        public bool IsBuyProduct(Product product, Shop shop, int number)
         {
-            if (_balance >= product.Price())
+            if (_balance >= product.Price() * number)
             {
-                return shop.IsBuyABatch(product, 1);
+                return shop.IsBuyABatch(product, number);
             }
 
             return false;
