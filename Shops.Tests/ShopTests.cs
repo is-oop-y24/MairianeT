@@ -32,7 +32,7 @@ namespace Shops.Tests
             int chocolatePrice = 50;
             Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice);
             int chocolateNumber = 100;
-            shop.AddProduct(product1, chocolateNumber);
+            _shopManager.AddProductToShop(shop, product1, chocolateNumber);
             
             Assert.AreEqual(chocolatePrice, shop.GetProduct(product1.Name()).Price());
             
@@ -47,19 +47,19 @@ namespace Shops.Tests
             Shop shop1 = _shopManager.AddShop("Prisma", "Transport line, 4");
             Shop shop2 = _shopManager.AddShop("Lenta", "Khasanskaya street, 17");
             Shop shop3 = _shopManager.AddShop("24h", "Khasanskaya street, 14");
-            int chocolatePrice1 = 50;
-            int chocolatePrice2 = 45;
-            int chocolatePrice3 = 70;
-            int standardPrice = 55;
+            const int chocolatePrice1 = 50;
+            const int chocolatePrice2 = 45;
+            const int chocolatePrice3 = 70;
+            const int standardPrice = 55;
             Product product = _shopManager.AddProduct("chocolate", standardPrice);
             Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice1);
             Product product2 = _shopManager.AddProduct("chocolate", chocolatePrice2);
             Product product3 = _shopManager.AddProduct("chocolate", chocolatePrice3);
-            int chocolateNumber = 100;
-            shop1.AddProduct(product1, chocolateNumber);
-            shop2.AddProduct(product2, chocolateNumber);
-            shop3.AddProduct(product3, chocolateNumber);
-            int requiredNumber = 34;
+            const int chocolateNumber = 100;
+            _shopManager.AddProductToShop(shop1, product1, chocolateNumber);
+            _shopManager.AddProductToShop(shop2, product2, chocolateNumber);
+            _shopManager.AddProductToShop(shop3, product3, chocolateNumber);
+            const int requiredNumber = 34;
             Shop resultShop = _shopManager.CheapestPurchase(product, requiredNumber);
             
             Assert.AreEqual(shop1, resultShop);
@@ -71,7 +71,7 @@ namespace Shops.Tests
             const int chocolatePrice = 50;
             Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice);
             const int startChocolateNumber = 100;
-            shop.AddProduct(product1, startChocolateNumber);
+            _shopManager.AddProductToShop(shop, product1, startChocolateNumber);
             const int startBalance = 500;
             var person = new Customer("Ivan", startBalance);
             
