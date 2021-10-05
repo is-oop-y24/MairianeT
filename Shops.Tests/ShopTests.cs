@@ -19,9 +19,9 @@ namespace Shops.Tests
         {
             Shop shop = _shopManager.AddShop("Prisma", "Transport line, 4");
             int chocolatePrice = 50;
-            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice);
             int chocolateNumber = 100;
-            _shopManager.AddProductToShop(shop, product1, chocolateNumber);
+            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice, chocolateNumber);
+            _shopManager.AddProductToShop(product1, shop);
 
             Assert.IsTrue(shop.IsProductInShop(product1));
         }
@@ -30,9 +30,9 @@ namespace Shops.Tests
         {
             Shop shop = _shopManager.AddShop("Prisma", "Transport line, 4");
             int chocolatePrice = 50;
-            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice);
             int chocolateNumber = 100;
-            _shopManager.AddProductToShop(shop, product1, chocolateNumber);
+            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice, chocolateNumber);
+            _shopManager.AddProductToShop(product1, shop);
             
             Assert.AreEqual(chocolatePrice, shop.GetProduct(product1.Name()).Price());
             
@@ -51,14 +51,14 @@ namespace Shops.Tests
             const int chocolatePrice2 = 45;
             const int chocolatePrice3 = 70;
             const int standardPrice = 55;
-            Product product = _shopManager.AddProduct("chocolate", standardPrice);
-            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice1);
-            Product product2 = _shopManager.AddProduct("chocolate", chocolatePrice2);
-            Product product3 = _shopManager.AddProduct("chocolate", chocolatePrice3);
             const int chocolateNumber = 100;
-            _shopManager.AddProductToShop(shop1, product1, chocolateNumber);
-            _shopManager.AddProductToShop(shop2, product2, chocolateNumber);
-            _shopManager.AddProductToShop(shop3, product3, chocolateNumber);
+            Product product = _shopManager.AddProduct("chocolate", standardPrice, chocolateNumber);
+            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice1, chocolateNumber);
+            Product product2 = _shopManager.AddProduct("chocolate", chocolatePrice2, chocolateNumber);
+            Product product3 = _shopManager.AddProduct("chocolate", chocolatePrice3, chocolateNumber);
+            _shopManager.AddProductToShop(product1, shop1);
+            _shopManager.AddProductToShop(product2, shop2);
+            _shopManager.AddProductToShop(product3, shop3);
             const int requiredNumber = 34;
             Shop resultShop = _shopManager.CheapestPurchase(product, requiredNumber);
             
@@ -69,9 +69,9 @@ namespace Shops.Tests
         {
             Shop shop = _shopManager.AddShop("Prisma", "Transport line, 4");
             const int chocolatePrice = 50;
-            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice);
             const int startChocolateNumber = 100;
-            _shopManager.AddProductToShop(shop, product1, startChocolateNumber);
+            Product product1 = _shopManager.AddProduct("chocolate", chocolatePrice, startChocolateNumber);
+            _shopManager.AddProductToShop(product1, shop);
             const int startBalance = 500;
             var person = new Customer("Ivan", startBalance);
             

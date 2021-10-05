@@ -20,26 +20,16 @@ namespace Shops.Services
             return newShop;
         }
 
-        public Product AddProduct(string name, int price)
+        public Product AddProduct(string name, int price, int number)
         {
-            var newProduct = new Product(name, price);
+            var newProduct = new Product(name, price, number);
             products.Add(newProduct);
             return newProduct;
         }
 
-        public void AddProductToShop(Product newProduct, int number, Shop shop)
+        public void AddProductToShop(Product newProduct, Shop shop)
         {
-            shop.AddProduct(newProduct, number);
-        }
-
-        public void ProductPurchase(Customer customer, Product product, int number)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RemoveShop(Shop shop)
-        {
-            shops.Remove(shop);
+            shop.AddProduct(newProduct);
         }
 
         public Shop CheapestPurchase(Product product, int number)
@@ -61,11 +51,6 @@ namespace Shops.Services
         public bool IsProductPurchase(Customer person, Product product, Shop shop, int number)
         {
             return shop.IsBuyProduct(product, person, number);
-        }
-
-        public void AddProductToShop(Shop shop, Product product, int number)
-        {
-            shop.AddProduct(product, number);
         }
     }
 }

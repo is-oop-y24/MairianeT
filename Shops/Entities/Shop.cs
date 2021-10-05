@@ -9,7 +9,6 @@ namespace Shops.Entities
         private int _id;
         private string _name;
         private List<Product> products = new List<Product>();
-        private List<int> numbers = new List<int>();
         private string _address;
 
         public Shop(string name, string address, int id)
@@ -19,7 +18,7 @@ namespace Shops.Entities
             _address = address;
         }
 
-        public void AddProduct(Product newProduct, int number)
+        public void AddProduct(Product newProduct)
         {
             int index = -1;
             foreach (Product product in products)
@@ -33,12 +32,11 @@ namespace Shops.Entities
 
             if (index > -1)
             {
-                numbers[index] += number;
+                products[index].IncreaseNumber(newProduct.Number());
             }
             else
             {
                 products.Add(newProduct);
-                numbers.Add(number);
             }
         }
 
@@ -46,10 +44,9 @@ namespace Shops.Entities
         {
             int index = products.IndexOf(product);
             if (index < 0) return false;
-            if (numbers[index] < number) return false;
-            numbers[index] -= number;
-            if (numbers[index] != 0) return true;
-            numbers.RemoveAt(index);
+            if (products[index].Number() < number) return false;
+            products[index].DecreaseNumber(number);
+            if (products[index].Number() != 0) return true;
             products.RemoveAt(index);
 
             return true;
@@ -59,7 +56,7 @@ namespace Shops.Entities
         {
             int index = products.IndexOf(product);
             if (index < 0) return -1; // no product
-            if (numbers[index] < number) return -2; // not enough products
+            if (products[index].Number() < number) return -2; // not enough products
             int batchCost = number * products[index].Price();
             return batchCost;
         }
@@ -92,8 +89,7 @@ namespace Shops.Entities
 
         public int ProductNumber(Product product)
         {
-            int index = products.IndexOf(product);
-            return numbers[index];
+            return product.Number();
         }
 
         public bool IsBuyProduct(Product product, Customer person, int number)

@@ -7,8 +7,9 @@ namespace Shops.Entities
     {
         private int _price;
         private string _name;
+        private int _number;
 
-        public Product(string name, int price)
+        public Product(string name, int price, int number)
         {
             if (price < 0)
             {
@@ -20,6 +21,7 @@ namespace Shops.Entities
             }
 
             _name = name;
+            _number = number;
         }
 
         public bool AreEqual(Product product)
@@ -54,6 +56,21 @@ namespace Shops.Entities
         public string Name()
         {
             return _name;
+        }
+
+        public int Number()
+        {
+            return _number;
+        }
+
+        public void IncreaseNumber(int number)
+        {
+            _number += number;
+        }
+
+        public void DecreaseNumber(int number)
+        {
+            _number -= number;
         }
     }
 }
