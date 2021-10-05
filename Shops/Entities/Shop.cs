@@ -20,19 +20,19 @@ namespace Shops.Entities
 
         public void AddProduct(Product newProduct)
         {
-            int index = -1;
+            Product resultProduct = null;
             foreach (Product product in products)
             {
                 if (product.AreEqual(newProduct))
                 {
-                    index = products.IndexOf(product);
+                    resultProduct = product;
                     break;
                 }
             }
 
-            if (index > -1)
+            if (resultProduct != null)
             {
-                products[index].IncreaseNumber(newProduct.Number());
+                resultProduct.IncreaseNumber(newProduct.Number());
             }
             else
             {
