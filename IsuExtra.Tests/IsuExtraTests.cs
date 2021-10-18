@@ -38,7 +38,7 @@ namespace IsuExtra.Tests
             _isuExtraService.AddClassToOGNPStream(p1, 3, lecture1);
             _isuExtraService.AddClassToOGNPStream(k2, 3, lecture2);
             
-            _isuExtraService.AddStudentToOGNP(p1, );
+            
         }
         
     }
