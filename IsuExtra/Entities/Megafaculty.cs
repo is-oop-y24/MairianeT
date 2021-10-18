@@ -7,13 +7,13 @@ namespace IsuExtra.Entities
     {
         private string _name;
         private List<CourseNumber> courses;
-        private List<StudentOGNP> students;
+        private List<Student> students;
 
         public Megafaculty(string name)
         {
             _name = name;
             courses = new List<CourseNumber>();
-            students = new List<StudentOGNP>();
+            students = new List<Student>();
         }
 
         public void AddCourse(CourseNumber course)
@@ -21,7 +21,7 @@ namespace IsuExtra.Entities
             courses.Add(course);
         }
 
-        public void AddStudent(StudentOGNP student)
+        public void AddStudent(Student student)
         {
             students.Add(student);
         }

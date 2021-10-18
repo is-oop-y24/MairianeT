@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Isu.Entities;
 
 namespace IsuExtra.Entities
 {
     public class OGNP
     {
         private List<OGNPStream> streams;
-        private List<StudentOGNP> students;
+        private List<Student> students;
         private string _megafaculty;
 
         public OGNP(string megafaculty)
         {
             streams = new List<OGNPStream>();
-            students = new List<StudentOGNP>();
+            students = new List<Student>();
             _megafaculty = megafaculty;
         }
 
-        public void NewStudent(StudentOGNP student, OGNPStream stream)
+        public void NewStudent(Student student, OGNPStream stream)
         {
             students.Add(student);
             stream.NewStudent(student);
@@ -26,7 +27,7 @@ namespace IsuExtra.Entities
             }
         }
 
-        public void RemoveStudent(StudentOGNP student)
+        public void RemoveStudent(Student student)
         {
             students.Remove(student);
             foreach (OGNPStream stream in streams.Where(stream => stream.IsStudentOnThisOGNP(student)))
@@ -40,7 +41,7 @@ namespace IsuExtra.Entities
             streams.Add(stream);
         }
 
-        public bool IsStudentOnThisOGNP(StudentOGNP student)
+        public bool IsStudentOnThisOGNP(Student student)
         {
             return students.Contains(student);
         }

@@ -10,13 +10,13 @@ namespace IsuExtra.Services
     {
         private List<Megafaculty> megafaculties;
         private List<OGNP> ognps;
-        private List<StudentOGNP> students;
+        private List<Student> students;
 
         public IsuExtraService()
         {
             megafaculties = new List<Megafaculty>();
             ognps = new List<OGNP>();
-            students = new List<StudentOGNP>();
+            students = new List<Student>();
         }
 
         public Megafaculty AddMegafaculty(string name)
@@ -63,21 +63,19 @@ namespace IsuExtra.Services
             stream.AddClass(day, newClass);
         }
 
-        public void AddStudentToOGNP(OGNPStream stream, StudentOGNP student)
+        public void AddStudentToOGNP(OGNPStream stream, Student student)
         {
             foreach (OGNP ognp in ognps.Where(ognp => ognp.OgnpStreams().Contains(stream)))
             {
                 ognp.NewStudent(student, stream);
-                student.AddToOGNP(stream);
             }
         }
 
-        public void RemoveStudentFromOGNP(StudentOGNP student, OGNPStream stream)
+        public void RemoveStudentFromOGNP(Student student, OGNPStream stream)
         {
             foreach (OGNP ognp in ognps.Where(ognp => ognp.OgnpStreams().Contains(stream)))
             {
                 ognp.RemoveStudent(student);
-                student.RemoveFromOGNP(stream);
             }
         }
 
@@ -86,15 +84,15 @@ namespace IsuExtra.Services
             return ognp.OgnpStreams();
         }
 
-        public List<StudentOGNP> StudentsOnOGNPStream(OGNPStream stream)
+        public List<Student> StudentsOnOGNPStream(OGNPStream stream)
         {
             return stream.StudentsOnOGNP();
         }
 
-        public List<StudentOGNP> FreeStudents(Megafaculty megafaculty)
+        public List<Student> FreeStudents(Megafaculty megafaculty)
         {
-            var freeStudents = new List<StudentOGNP>();
-            foreach (StudentOGNP student in students)
+            var freeStudents = new List<Student>();
+            foreach (Student student in students)
             {
                 bool studentFree = true;
                 foreach (OGNP ognp in ognps)

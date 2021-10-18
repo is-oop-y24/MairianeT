@@ -13,10 +13,10 @@ namespace IsuExtra.Services
         Class AddClassOGNP(int classNumber, string teacher, int audience);
         Class AddClassMegafaculty(int classNumber, string teacher, int audience, Group group);
         void AddClassToOGNPStream(OGNPStream stream, int day, Class newClass);
-        void AddStudentToOGNP(OGNPStream stream, StudentOGNP student);
-        void RemoveStudentFromOGNP(StudentOGNP student, OGNPStream stream);
+        void AddStudentToOGNP(OGNPStream stream, Student student);
+        void RemoveStudentFromOGNP(Student student, OGNPStream stream);
         List<OGNPStream> StreamsOnOGNP(OGNP ognp);
-        List<StudentOGNP> StudentsOnOGNPStream(OGNPStream stream);
-        List<StudentOGNP> FreeStudents(Megafaculty megafaculty);
+        List<Student> StudentsOnOGNPStream(OGNPStream stream);
+        List<Student> FreeStudents(Megafaculty megafaculty);
     }
 }

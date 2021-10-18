@@ -25,7 +25,7 @@ namespace IsuExtra.Tests
             CourseNumber second = _isuExtraService.AddCourse(2, tint);
             Group third = _isuService.AddGroup(new GroupName("M3203"));
             Student Ivan = _isuService.AddStudent(third, "Ivan");
-
+            
             OGNP lin = _isuExtraService.AddOGNP(tint.Name());
             OGNP kib = _isuExtraService.AddOGNP(ktu.Name());
 
@@ -38,7 +38,11 @@ namespace IsuExtra.Tests
             _isuExtraService.AddClassToOGNPStream(p1, 3, lecture1);
             _isuExtraService.AddClassToOGNPStream(k2, 3, lecture2);
             
+            _isuExtraService.AddStudentToOGNP(p1, Ivan);
+            Assert.IsTrue(p1.IsStudentOnThisOGNP(Ivan));
             
+            _isuExtraService.RemoveStudentFromOGNP(Ivan, p1);
+            Assert.IsFalse(p1.IsStudentOnThisOGNP(Ivan));
         }
         
     }
