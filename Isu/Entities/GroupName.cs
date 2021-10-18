@@ -39,5 +39,10 @@ namespace Isu.Entities
         {
             return _course;
         }
+
+        public string Name()
+        {
+            return _name;
+        }
     }
 }

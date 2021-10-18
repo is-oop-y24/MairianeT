@@ -50,5 +50,10 @@ namespace IsuExtra.Entities
         {
             return streams;
         }
+
+        public string Megafaculty()
+        {
+            return _megafaculty;
+        }
     }
 }
