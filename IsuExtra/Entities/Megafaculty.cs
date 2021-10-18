@@ -25,5 +25,10 @@ namespace IsuExtra.Entities
         {
             students.Add(student);
         }
+
+        public string Name()
+        {
+            return _name;
+        }
     }
 }

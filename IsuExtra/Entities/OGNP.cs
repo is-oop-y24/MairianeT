@@ -35,6 +35,11 @@ namespace IsuExtra.Entities
             }
         }
 
+        public void AddStream(OGNPStream stream)
+        {
+            streams.Add(stream);
+        }
+
         public bool IsStudentOnThisOGNP(StudentOGNP student)
         {
             return students.Contains(student);

@@ -33,11 +33,34 @@ namespace IsuExtra.Services
             return newOGNP;
         }
 
-        public StudentOGNP AddStudent(string name, Group group)
+        public CourseNumber AddCourse(int courseNumber, Megafaculty megafaculty)
         {
-            var newStudent = new StudentOGNP(name, group);
-            students.Add(newStudent);
-            return newStudent;
+            CourseNumber course = new CourseNumber(courseNumber);
+            megafaculty.AddCourse(course);
+            return course;
+        }
+
+        public OGNPStream AddOgnpStream(OGNP ognp)
+        {
+            OGNPStream stream = new OGNPStream();
+            ognp.AddStream(stream);
+
+            return stream;
+        }
+
+        public Class AddClassOGNP(int classNumber, string teacher, int audience)
+        {
+            return new Class(classNumber, teacher, audience);
+        }
+
+        public Class AddClassMegafaculty(int classNumber, string teacher, int audience, Group @group)
+        {
+            return new Class(classNumber, teacher, audience, group);
+        }
+
+        public void AddClassToOGNPStream(OGNPStream stream, int day, Class newClass)
+        {
+            stream.AddClass(day, newClass);
         }
 
         public void AddStudentToOGNP(OGNPStream stream, StudentOGNP student)

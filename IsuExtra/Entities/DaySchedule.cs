@@ -21,6 +21,13 @@ namespace IsuExtra.Entities
             return true;
         }
 
+        public bool NewClass(Class newClass)
+        {
+            if (classes[newClass.ClassNumber()] != null) return false;
+            classes[newClass.ClassNumber()] = newClass;
+            return true;
+        }
+
         public bool RemoveClass(int classNumber)
         {
             if (classes[classNumber] == null) return false;

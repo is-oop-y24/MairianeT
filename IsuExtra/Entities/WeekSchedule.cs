@@ -18,9 +18,9 @@ namespace IsuExtra.Entities
             return daySchedules[day].IsFreeClass(classNumber);
         }
 
-        public bool NewClass(int day, int classNumber, string teacher, int audience, Group group)
+        public bool NewClass(int day, Class newClass)
         {
-            return daySchedules[day].NewClass(classNumber, teacher, audience, group);
+            return daySchedules[day].NewClass(newClass);
         }
 
         public void NewDay(int dayOfTheWeek, DaySchedule daySchedule)

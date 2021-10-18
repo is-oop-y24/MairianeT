@@ -16,6 +16,14 @@ namespace IsuExtra.Entities
             _start = GetTime(classNumber);
         }
 
+        public Class(int classNumber, string teacher, int audience)
+        {
+            _teacher = teacher;
+            _group = null;
+            _audience = audience;
+            _start = GetTime(classNumber);
+        }
+
         public Time GetTime(int classNumber)
         {
             return classNumber switch
@@ -48,6 +56,11 @@ namespace IsuExtra.Entities
         public Group Group()
         {
             return _group;
+        }
+
+        public int ClassNumber()
+        {
+            return ClassNumber();
         }
     }
 }
