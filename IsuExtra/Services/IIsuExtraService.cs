@@ -10,8 +10,8 @@ namespace IsuExtra.Services
         OGNP AddOGNP(string megafaculty);
         CourseNumber AddCourse(int courseNumber, Megafaculty megafaculty);
         OGNPStream AddOgnpStream(OGNP ognp);
-        Class AddClassOGNP(int classNumber, string teacher, int audience);
-        Class AddClassMegafaculty(int classNumber, string teacher, int audience, Group group);
+        Class AddClassOGNP(int classNumber, string teacher, string audience);
+        Class AddClassMegafaculty(int classNumber, string teacher, string audience, Group group);
         void AddClassToOGNPStream(OGNPStream stream, int day, Class newClass);
         void AddStudentToOGNP(OGNPStream stream, Student student);
         void RemoveStudentFromOGNP(Student student, OGNPStream stream);

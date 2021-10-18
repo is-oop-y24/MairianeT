@@ -14,7 +14,7 @@ namespace IsuExtra.Entities
             classes = new List<Class>(_maxClassesNumber);
         }
 
-        public bool NewClass(int classNumber, string teacher, int audience, Group group)
+        public bool NewClass(int classNumber, string teacher, string audience, Group group)
         {
             if (classes[classNumber] != null) return false;
             classes[classNumber] = new Class(classNumber, teacher, audience, group);

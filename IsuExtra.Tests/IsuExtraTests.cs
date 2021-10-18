@@ -32,8 +32,8 @@ namespace IsuExtra.Tests
             OGNPStream p1 = _isuExtraService.AddOgnpStream(lin);
             OGNPStream k2 = _isuExtraService.AddOgnpStream(kib);
 
-            Class lecture1 = _isuExtraService.AddClassOGNP(2, "Nikolay", 329);
-            Class lecture2 = _isuExtraService.AddClassMegafaculty(2, "Alexandr", 332, third);
+            Class lecture1 = _isuExtraService.AddClassOGNP(2, "Nikolay", "329");
+            Class lecture2 = _isuExtraService.AddClassMegafaculty(2, "Alexandr", "332", third);
             
             _isuExtraService.AddClassToOGNPStream(p1, 3, lecture1);
             _isuExtraService.AddClassToOGNPStream(k2, 3, lecture2);

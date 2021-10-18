@@ -5,10 +5,10 @@ namespace IsuExtra.Entities
     {
         private Time _start;
         private string _teacher;
-        private int _audience;
+        private string _audience;
         private Group _group;
 
-        public Class(int classNumber, string teacher, int audience, Group group)
+        public Class(int classNumber, string teacher, string audience, Group group)
         {
             _teacher = teacher;
             _group = group;
@@ -16,7 +16,7 @@ namespace IsuExtra.Entities
             _start = GetTime(classNumber);
         }
 
-        public Class(int classNumber, string teacher, int audience)
+        public Class(int classNumber, string teacher, string audience)
         {
             _teacher = teacher;
             _group = null;
@@ -43,7 +43,7 @@ namespace IsuExtra.Entities
             return _teacher;
         }
 
-        public int Audience()
+        public string Audience()
         {
             return _audience;
         }

@@ -48,12 +48,12 @@ namespace IsuExtra.Services
             return stream;
         }
 
-        public Class AddClassOGNP(int classNumber, string teacher, int audience)
+        public Class AddClassOGNP(int classNumber, string teacher, string audience)
         {
             return new Class(classNumber, teacher, audience);
         }
 
-        public Class AddClassMegafaculty(int classNumber, string teacher, int audience, Group @group)
+        public Class AddClassMegafaculty(int classNumber, string teacher, string audience, Group @group)
         {
             return new Class(classNumber, teacher, audience, group);
         }
