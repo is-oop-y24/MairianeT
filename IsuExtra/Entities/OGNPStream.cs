@@ -16,9 +16,9 @@ namespace IsuExtra.Entities
             students = new List<Student>();
         }
 
-        public void AddClass(int day, Class newClass)
+        public void AddLesson(int day, Lesson lesson)
         {
-            weekSchedule.NewClass(day, newClass);
+            weekSchedule.NewLesson(day, lesson);
         }
 
         public bool IsStudentOnThisOGNP(Student student)

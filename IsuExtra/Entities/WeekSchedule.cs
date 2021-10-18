@@ -13,14 +13,14 @@ namespace IsuExtra.Entities
             daySchedules = new List<DaySchedule>(_daysOfTheWeek);
         }
 
-        public bool IsFreeClass(int day, int classNumber)
+        public bool IsFreeLesson(int day, int lessonNumber)
         {
-            return daySchedules[day].IsFreeClass(classNumber);
+            return daySchedules[day].IsFreeLesson(lessonNumber);
         }
 
-        public bool NewClass(int day, Class newClass)
+        public bool NewLesson(int day, Lesson lesson)
         {
-            return daySchedules[day].NewClass(newClass);
+            return daySchedules[day].NewLesson(lesson);
         }
 
         public void NewDay(int dayOfTheWeek, DaySchedule daySchedule)
@@ -28,9 +28,9 @@ namespace IsuExtra.Entities
             daySchedules[dayOfTheWeek] = daySchedule;
         }
 
-        public bool RemoveClass(int day, int classNumber)
+        public bool RemoveLesson(int day, int lessonNumber)
         {
-            return daySchedules[day].RemoveClass(classNumber);
+            return daySchedules[day].RemoveLesson(lessonNumber);
         }
 
         public DaySchedule DaySchedule(int dayNumber)

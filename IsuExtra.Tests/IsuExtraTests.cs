@@ -23,10 +23,10 @@ namespace IsuExtra.Tests
         {
             Megafaculty tint = _isuExtraService.AddMegafaculty("H");
             Megafaculty ktu = _isuExtraService.AddMegafaculty("ktu");
-            int courseNumber = 2;
+            const int courseNumber = 2;
             CourseNumber second = _isuExtraService.AddCourse(courseNumber, tint);
             Group third = _isuService.AddGroup(new GroupName("M3203"));
-            Student Ivan = _isuService.AddStudent(third, "Ivan");
+            Student ivan = _isuService.AddStudent(third, "Ivan");
 
             OGNP lin = _isuExtraService.AddOGNP(tint.Name());
             OGNP kib = _isuExtraService.AddOGNP(ktu.Name());
@@ -34,29 +34,27 @@ namespace IsuExtra.Tests
             OGNPStream p1 = _isuExtraService.AddOgnpStream(lin);
             OGNPStream k2 = _isuExtraService.AddOgnpStream(kib);
 
-            int classNumber = 2;
-            int day = 3; // wednesday
-            string audience1 = "329";
-            string audience2 = "332a";
-            Class lecture1 = _isuExtraService.AddClassOGNP(classNumber, "Nikolay", audience1);
-            Class lecture2 = _isuExtraService.AddClassMegafaculty(day, classNumber, "Alexandr", audience2, third);
+            const int lessonNumber = 2;
+            const int day = 3; // wednesday
+            const string audience1 = "329";
+            Lesson lecture1 = _isuExtraService.AddLessonOGNP(lessonNumber, "Nikolay", audience1);
+            
+            _isuExtraService.AddLessonToOGNPStream(p1, day, lecture1);
 
-            _isuExtraService.AddClassToOGNPStream(p1, day, lecture1);
+            _isuExtraService.AddStudentToOGNP(p1, ivan);
+            Assert.IsTrue(p1.IsStudentOnThisOGNP(ivan));
 
-            _isuExtraService.AddStudentToOGNP(p1, Ivan);
-            Assert.IsTrue(p1.IsStudentOnThisOGNP(Ivan));
-
-            _isuExtraService.RemoveStudentFromOGNP(Ivan, p1);
-            Assert.IsFalse(p1.IsStudentOnThisOGNP(Ivan));
+            _isuExtraService.RemoveStudentFromOGNP(ivan, p1);
+            Assert.IsFalse(p1.IsStudentOnThisOGNP(ivan));
         }
 
         public void TryToAddStudentInFullOGNP()
         {
             Megafaculty tint = _isuExtraService.AddMegafaculty("H");
-            int courseNumber = 2;
+            const int courseNumber = 2;
             CourseNumber second = _isuExtraService.AddCourse(courseNumber, tint);
             Group third = _isuService.AddGroup(new GroupName("M3203"));
-            Student Ivan = _isuService.AddStudent(third, "Ivan");
+            Student ivan = _isuService.AddStudent(third, "Ivan");
 
             OGNP lin = _isuExtraService.AddOGNP(tint.Name());
 
@@ -72,30 +70,27 @@ namespace IsuExtra.Tests
             });
         }
 
-        public void TryToAddClassInSameTime()
+        public void TryToAddLessonInSameTime()
         {
             Megafaculty tint = _isuExtraService.AddMegafaculty("H");
-            int courseNumber = 2;
+            const int courseNumber = 2;
             CourseNumber second = _isuExtraService.AddCourse(courseNumber, tint);
             Group third = _isuService.AddGroup(new GroupName("M3203"));
-            Student Ivan = _isuService.AddStudent(third, "Ivan");
+            Student ivan = _isuService.AddStudent(third, "Ivan");
 
             OGNP lin = _isuExtraService.AddOGNP(tint.Name());
 
             OGNPStream p1 = _isuExtraService.AddOgnpStream(lin);
 
-            int classNumber = 2;
-            int day = 3; // wednesday
-            string audience1 = "329";
-            string audience2 = "332a";
-            Class lecture1 = _isuExtraService.AddClassOGNP(classNumber, "Nikolay", audience1);
-            Class lecture2 = _isuExtraService.AddClassMegafaculty(day, classNumber, "Alexandr", audience2, third);
-
-            _isuExtraService.AddClassToOGNPStream(p1, day, lecture1);
+            const int lessonNumber = 2;
+            const int day = 3; // wednesday
+            const string audience = "329";
+            Lesson lecture = _isuExtraService.AddLessonOGNP(lessonNumber, "Nikolay", audience);
+            _isuExtraService.AddLessonToOGNPStream(p1, day, lecture);
             
                 Assert.Catch<Exception>(() =>
             {
-                _isuExtraService.AddStudentToOGNP(p1, Ivan);
+                _isuExtraService.AddStudentToOGNP(p1, ivan);
             });
         }
 
@@ -103,10 +98,10 @@ namespace IsuExtra.Tests
         {
             Megafaculty tint = _isuExtraService.AddMegafaculty("M");
             Megafaculty ktu = _isuExtraService.AddMegafaculty("ktu");
-            int courseNumber = 2;
+            const int courseNumber = 2;
             CourseNumber second = _isuExtraService.AddCourse(courseNumber, tint);
             Group third = _isuService.AddGroup(new GroupName("M3203"));
-            Student Ivan = _isuService.AddStudent(third, "Ivan");
+            Student ivan = _isuService.AddStudent(third, "Ivan");
 
             OGNP lin = _isuExtraService.AddOGNP(tint.Name());
             OGNP kib = _isuExtraService.AddOGNP(ktu.Name());
@@ -114,21 +109,21 @@ namespace IsuExtra.Tests
             OGNPStream p1 = _isuExtraService.AddOgnpStream(lin);
             OGNPStream k2 = _isuExtraService.AddOgnpStream(kib);
 
-            int classNumber1 = 2;
-            int classNumber2 = 4;
-            int day1 = 3; // wednesday
-            int day2 = 4; // thursday
-            string audience1 = "329";
-            string audience2 = "332a";
-            Class lecture1 = _isuExtraService.AddClassOGNP(classNumber1, "Nikolay", "329");
-            Class lecture2 = _isuExtraService.AddClassOGNP(classNumber2, "Alexandr", "332a");
+            const int lessonNumber1 = 2;
+            const int lessonNumber2 = 4;
+            const int day1 = 3; // wednesday
+            const int day2 = 4; // thursday
+            const string audience1 = "329";
+            const string audience2 = "332a";
+            Lesson lecture1 = _isuExtraService.AddLessonOGNP(lessonNumber1, "Nikolay", audience1);
+            Lesson lecture2 = _isuExtraService.AddLessonOGNP(lessonNumber2, "Alexandr", audience2);
 
-            _isuExtraService.AddClassToOGNPStream(p1, day1, lecture1);
-            _isuExtraService.AddClassToOGNPStream(k2, day2, lecture2);
+            _isuExtraService.AddLessonToOGNPStream(p1, day1, lecture1);
+            _isuExtraService.AddLessonToOGNPStream(k2, day2, lecture2);
             
             Assert.Catch<Exception>(() =>
             {
-                _isuExtraService.AddStudentToOGNP(p1, Ivan);
+                _isuExtraService.AddStudentToOGNP(p1, ivan);
             });
         }
     }

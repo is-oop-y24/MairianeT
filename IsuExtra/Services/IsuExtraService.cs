@@ -51,26 +51,26 @@ namespace IsuExtra.Services
             return stream;
         }
 
-        public Class AddClassOGNP(int classNumber, string teacher, string audience)
+        public Lesson AddLessonOGNP(int lessonNumber, string teacher, string audience)
         {
-            return new Class(classNumber, teacher, audience);
+            return new Lesson(lessonNumber, teacher, audience);
         }
 
-        public Class AddClassMegafaculty(int day, int classNumber, string teacher, string audience, Group group)
+        public Lesson AddLessonMegafaculty(int day, int lessonNumber, string teacher, string audience, Group group)
         {
-            Class newClass = new Class(classNumber, teacher, audience, group);
-            scheldules[group].NewClass(day, newClass);
-            return newClass;
+            Lesson newLesson = new Lesson(lessonNumber, teacher, audience, group);
+            scheldules[group].NewLesson(day, newLesson);
+            return newLesson;
         }
 
-        public void AddClassToOGNPStream(OGNPStream stream, int day, Class newClass)
+        public void AddLessonToOGNPStream(OGNPStream stream, int day, Lesson newLesson)
         {
-            stream.AddClass(day, newClass);
+            stream.AddLesson(day, newLesson);
         }
 
         public void AddStudentToOGNP(OGNPStream stream, Student student)
         {
-            if (stream.Schedule().AreIntersections(scheldules[student.Group()])) throw new Exception("Class intersection");
+            if (stream.Schedule().AreIntersections(scheldules[student.Group()])) throw new Exception("Lesson intersection");
             foreach (OGNP ognp in ognps.Where(ognp => ognp.OgnpStreams().Contains(stream)))
             {
                 if (student.Group().GroupName().Name()[..1] == ognp.Megafaculty())

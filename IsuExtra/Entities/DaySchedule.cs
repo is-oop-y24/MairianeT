@@ -6,79 +6,76 @@ namespace IsuExtra.Entities
 {
     public class DaySchedule
     {
-        private readonly List<Class> classes;
-        private int _maxClassesNumber = 6;
+        private readonly List<Lesson> lessons;
+        private int _maxLessonsNumber = 6;
 
         public DaySchedule()
         {
-            classes = new List<Class>(_maxClassesNumber);
+            lessons = new List<Lesson>(_maxLessonsNumber);
         }
 
-        public bool NewClass(int classNumber, string teacher, string audience, Group group)
+        public bool NewLesson(int lessonNumber, string teacher, string audience, Group group)
         {
-            if (classes[classNumber] != null) return false;
-            classes[classNumber] = new Class(classNumber, teacher, audience, group);
+            if (lessons[lessonNumber] != null) return false;
+            lessons[lessonNumber] = new Lesson(lessonNumber, teacher, audience, group);
             return true;
         }
 
-        public bool NewClass(Class newClass)
+        public bool NewLesson(Lesson lesson)
         {
-            if (classes[newClass.ClassNumber()] != null) return false;
-            classes[newClass.ClassNumber()] = newClass;
+            if (lessons[lesson.LessonNumber()] != null) return false;
+            lessons[lesson.LessonNumber()] = lesson;
             return true;
         }
 
-        public bool RemoveClass(int classNumber)
+        public bool RemoveLesson(int lessonNumber)
         {
-            if (classes[classNumber] == null) return false;
-            classes[classNumber] = null;
+            if (lessons[lessonNumber] == null) return false;
+            lessons[lessonNumber] = null;
             return true;
         }
 
-        public bool IsFreeClass(int classNumber)
+        public bool IsFreeLesson(int lessonNumber)
         {
-            return classes[classNumber] == null;
+            return lessons[lessonNumber] == null;
         }
 
         public bool AreIntersections(DaySchedule current)
         {
-            for (int i = 0; i < _maxClassesNumber; i++)
+            foreach (Lesson lesson in lessons)
             {
-                if (classes[i] != null && !current.IsFreeClass(i))
-                {
-                    return false;
-                }
+                if (lesson != null && !current.IsFreeLesson(lesson.LessonNumber())) return false;
             }
 
             return true;
         }
 
-        public Class GetClass(int classNumber)
+        public Lesson GetLesson(int lessonNumber)
         {
-            return classes[classNumber];
+            return lessons[lessonNumber];
         }
 
         public void Union(DaySchedule newSchedule)
         {
-            for (int i = 0; i < _maxClassesNumber; i++)
+            for (int i = 0; i < _maxLessonsNumber; i++)
             {
-                if (newSchedule.IsFreeClass(i)) continue;
-                if (classes[i] == null)
+                if (newSchedule.IsFreeLesson(i)) continue;
+                if (lessons[i] == null)
                 {
-                    classes[i] = newSchedule.GetClass(i);
+                    lessons[i] = newSchedule.GetLesson(i);
                 }
                 else
                 {
-                    throw new Exception("Class intersect");
+                    throw new Exception("Lesson intersect");
                 }
             }
         }
 
         public void Remove(DaySchedule current)
         {
-            for (int i = 0; i < _maxClassesNumber; i++)
+            for (int i = 0; i < _maxLessonsNumber; i++)
             {
-                if (classes[i] == current.GetClass(i)) classes[i] = null;
+                if (lessons[i] == current.GetLesson(i)) lessons[i] = null;
             }
         }
     }
