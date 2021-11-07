@@ -45,9 +45,9 @@ namespace Backups
             RestorePoints.Add(newRestorePoint);
         }
 
-        public bool CheckRestorePoint(int restorePointNumber)
+        public bool CheckRestorePoint(int restorePointNumber, int filesNumber)
         {
-            return RestorePoints[restorePointNumber - 1].Files.Count == 2;
+            return RestorePoints[restorePointNumber - 1].ZipFiles.Count == filesNumber;
         }
 
         private void UpdateFiles()
