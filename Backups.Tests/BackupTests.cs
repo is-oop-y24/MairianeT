@@ -23,10 +23,12 @@ namespace Backups.Tests
             _backup.Add(pathFileA);
             _backup.Add(pathFileB);
             _backup.MakeRestorePoint();
+            const int filesNumberInRestorePoint1 = 2;
             _backup.Remove(pathFileB);
             _backup.MakeRestorePoint();
-            Assert.True(_backup.CheckRestorePoint(1, 2), "fail on RP 1");
-            Assert.True(_backup.CheckRestorePoint(2, 1), "fail on RP 2");
+            const int filesNumberInRestorePoint2 = 1;
+            Assert.True(_backup.CheckRestorePoint(1, filesNumberInRestorePoint1), "fail on RP 1");
+            Assert.True(_backup.CheckRestorePoint(2, filesNumberInRestorePoint2), "fail on RP 2");
         }
     }
 }
