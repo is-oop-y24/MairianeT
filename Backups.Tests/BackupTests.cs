@@ -12,23 +12,23 @@ namespace Backups.Tests
         public void Setup()
         {
             IAlgorithm algorithm = new SplitStoragesAlgorithm();
-                _backup = new Backup(@".\", algorithm);
+                _backup = new Backup(@"./", algorithm);
         }
 
         [Test]
         public void AddFileA_AddFileB_MakePoint_RemoveFileB_MakePoint()
         {
-            const string pathFileA = @".\..\..\..\A";
-            const string pathFileB = @".\..\..\..\B";
+            const string pathFileA = "./../../../A";
+            const string pathFileB = "./../../../B";
             _backup.Add(pathFileA);
             _backup.Add(pathFileB);
             _backup.MakeRestorePoint();
             _backup.Remove(pathFileB);
             _backup.MakeRestorePoint();
-            Assert.True(File.Exists(@".\Backup\A_1.zip"), "file A1");
-            Assert.True(File.Exists(@".\Backup\B_1.zip"), "file B1");
-            Assert.True(File.Exists(@".\Backup\A_2.zip"), "file A2");
-            Assert.False(File.Exists(@".\Backup\B_2.zip"), "file B2");
+            Assert.True(File.Exists(@"./Backup/A_1.zip"), "file A1");
+            Assert.True(File.Exists(@"./Backup/B_1.zip"), "file B1");
+            Assert.True(File.Exists(@"./Backup/A_2.zip"), "file A2");
+            Assert.False(File.Exists(@"./Backup/B_2.zip"), "file B2");
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Backups
                 var zipFiles = new List<ZipFile>();
                 foreach (BackupFile file in filesToSave)
                 {
-                    string zipName = path + @"\" + file.Name + "_" + restorePointNumber + ".zip";
+                    string zipName = path + @"/" + file.Name + "_" + restorePointNumber + ".zip";
                     var zip = new ZipFile();
-                    zip.AddFile(file.FullName, @"\");
+                    zip.AddFile(file.FullName, @"/");
                     zip.Save(zipName);
                     zipFiles.Add(zip);
                 }
