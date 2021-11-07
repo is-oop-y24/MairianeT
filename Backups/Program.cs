@@ -6,7 +6,7 @@ namespace Backups
     {
         private static void Main()
         {
-            IAlgorithm algorithm = new SplitStorages();
+            IAlgorithm algorithm = new SingleStorageAlgorithm();
             IBackup backup = new Backup(@"C:\Users\User\Desktop", algorithm);
             backup.Add(@"C:\Users\User\Desktop\A");
             backup.Add(@"C:\Users\User\Desktop\B");
