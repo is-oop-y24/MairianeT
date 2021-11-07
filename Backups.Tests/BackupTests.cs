@@ -25,10 +25,10 @@ namespace Backups.Tests
             _backup.MakeRestorePoint();
             _backup.Remove(pathFileB);
             _backup.MakeRestorePoint();
-            Assert.True(File.Exists(@"./Backup/A_1.zip"), "file A1");
-            Assert.True(File.Exists(@"./Backup/B_1.zip"), "file B1");
-            Assert.True(File.Exists(@"./Backup/A_2.zip"), "file A2");
-            Assert.False(File.Exists(@"./Backup/B_2.zip"), "file B2");
+            Assert.True(_backup.IsFileHere(1, pathFileA));
+            Assert.True(_backup.IsFileHere(1, pathFileB));
+            Assert.True(_backup.IsFileHere(2, pathFileA));
+            Assert.False(_backup.IsFileHere(2, pathFileB));
         }
     }
 }

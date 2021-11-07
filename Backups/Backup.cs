@@ -45,6 +45,11 @@ namespace Backups
             RestorePoints.Add(newRestorePoint);
         }
 
+        public bool IsFileHere(int restorePointNumber, string filePath)
+        {
+            return RestorePoints[restorePointNumber].Files.Any(file => file.FilePath == filePath);
+        }
+
         private void UpdateFiles()
         {
             foreach (BackupFile file in BackupFiles)

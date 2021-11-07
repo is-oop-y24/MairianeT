@@ -3,8 +3,8 @@
     public interface IBackup
     {
         void Add(string filePath);
-        void Add(BackupFile newFile);
         void Remove(string filePath);
         void MakeRestorePoint();
+        bool IsFileHere(int restorePointNumber, string filePath);
     }
 }

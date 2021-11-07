@@ -13,8 +13,8 @@ namespace Backups
             ZipFiles = algorithm.MakeStorage(filesToSave, path, restorePointNumber);
         }
 
-        private DateTime CreationTime { get; }
-        private List<BackupFile> Files { get; }
-        private List<ZipFile> ZipFiles { get; }
+        public DateTime CreationTime { get; }
+        public List<BackupFile> Files { get; }
+        public List<ZipFile> ZipFiles { get; }
     }
 }
