@@ -10,7 +10,7 @@ namespace Backups
 
         public string MakeDirectory(string path)
         {
-            string directory = path + @"\Backup";
+            string directory = path + "/Backup";
             Directory.CreateDirectory(directory);
             return directory;
         }

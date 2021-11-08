@@ -6,5 +6,6 @@
         void Remove(string filePath);
         void MakeRestorePoint();
         bool CheckRestorePoint(int restorePointNumber, int filesNumber);
+        bool IsFileHere(int restorePointNumber, string filePath);
     }
 }

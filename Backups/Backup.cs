@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ionic.Zip;
 
 namespace Backups
 {
@@ -48,6 +49,11 @@ namespace Backups
         public bool CheckRestorePoint(int restorePointNumber, int filesNumber)
         {
             return RestorePoints[restorePointNumber - 1].ZipFiles.Count == filesNumber;
+        }
+
+        public bool IsFileHere(int restorePointNumber, string filePath)
+        {
+            return RestorePoints[restorePointNumber - 1].ZipFiles.Any(file => file.Name == filePath);
         }
 
         private void UpdateFiles()
