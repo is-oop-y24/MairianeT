@@ -6,10 +6,6 @@ namespace Backups
 {
     public class SingleStorageAlgorithm : IAlgorithm
     {
-        public SingleStorageAlgorithm()
-        {
-        }
-
         public List<ZipFile> MakeStorage(List<BackupFile> filesToSave, string path, string restorePointNumber)
         {
             var zipFiles = new List<ZipFile>();
