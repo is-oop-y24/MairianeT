@@ -22,26 +22,20 @@ namespace Backups
         private IAlgorithm Algorithm { get; }
         private Repository CurrRepository { get; }
 
-        public void Add(string filePath)
+        public void Add(string filePath, string fileName)
         {
-            BackupFiles.Add(new BackupFile(filePath));
+            BackupFiles.Add(new BackupFile(filePath, fileName));
         }
 
-        public void Add(BackupFile newFile)
+        public void Remove(string filePath, string fileName)
         {
-            BackupFiles.Add(newFile);
-        }
-
-        public void Remove(string filePath)
-        {
-            BackupFile fileToRemove = BackupFiles.SingleOrDefault(r => r.FilePath == filePath);
+            BackupFile fileToRemove = BackupFiles.SingleOrDefault(r => r.FullName == filePath + "/" + fileName);
             if (fileToRemove != null)
                 BackupFiles.Remove(fileToRemove);
         }
 
         public void MakeRestorePoint()
         {
-            UpdateFiles();
             var newRestorePoint = new RestorePoint(BackupFiles, Path, (RestorePoints.Count + 1).ToString(), Algorithm);
             RestorePoints.Add(newRestorePoint);
         }
@@ -54,12 +48,6 @@ namespace Backups
         public bool IsFileHere(int restorePointNumber, string filePath)
         {
             return RestorePoints[restorePointNumber - 1].ZipFiles.Any(file => file.Name == filePath);
-        }
-
-        private void UpdateFiles()
-        {
-            foreach (BackupFile file in BackupFiles)
-                file.Update();
         }
     }
 }
