@@ -33,5 +33,14 @@ namespace Backups.Tests
             Assert.True(_backup.IsFileHere(2, "./Backup/A_2.zip"), "file A2");
             Assert.False(_backup.IsFileHere(2, "./Backup/B_2.zip"), "file B2");
         }
+
+        public void VirtualBackup()
+        {
+            const string pathFile = "./../../..";
+            _backup.Add(pathFile, "A");
+            _backup.MakeRestorePoint();
+            const string fileName = pathFile + "/A";
+            Assert.True(_backup.CheckVirtualBackup(1, fileName), "virtual");
+        }
     }
 }

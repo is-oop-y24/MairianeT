@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Ionic.Zip;
 
 namespace Backups
 {
@@ -11,11 +9,13 @@ namespace Backups
         {
             BackupFiles = new List<BackupFile>();
             RestorePoints = new List<RestorePoint>();
+            VirtualBackups = new List<VirtualBackup>();
             Algorithm = algorithm;
             CurrRepository = new Repository();
             Path = CurrRepository.MakeDirectory(path);
         }
 
+        private List<VirtualBackup> VirtualBackups { get; }
         private string Path { get; }
         private List<BackupFile> BackupFiles { get; }
         private List<RestorePoint> RestorePoints { get; }
@@ -29,7 +29,7 @@ namespace Backups
 
         public void Remove(string filePath, string fileName)
         {
-            BackupFile fileToRemove = BackupFiles.SingleOrDefault(r => r.FullName == filePath + "/" + fileName);
+            BackupFile fileToRemove = BackupFiles.SingleOrDefault(r => (r.Name == fileName && r.FilePath == filePath));
             if (fileToRemove != null)
                 BackupFiles.Remove(fileToRemove);
         }
@@ -40,6 +40,12 @@ namespace Backups
             RestorePoints.Add(newRestorePoint);
         }
 
+        public void MakeVirtualBackup()
+        {
+            var newVirtualRestorePoint = new VirtualBackup(BackupFiles);
+            VirtualBackups.Add(newVirtualRestorePoint);
+        }
+
         public bool CheckRestorePoint(int restorePointNumber, int filesNumber)
         {
             return RestorePoints[restorePointNumber - 1].ZipFiles.Count == filesNumber;
@@ -48,6 +54,11 @@ namespace Backups
         public bool IsFileHere(int restorePointNumber, string filePath)
         {
             return RestorePoints[restorePointNumber - 1].ZipFiles.Any(file => file.Name == filePath);
+        }
+
+        public bool CheckVirtualBackup(int virtualBackupNumber, string filePath)
+        {
+            return VirtualBackups[virtualBackupNumber - 1].Files.Any(file => file == filePath);
         }
     }
 }

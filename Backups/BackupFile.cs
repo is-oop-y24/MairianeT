@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace Backups
 {
@@ -7,20 +6,15 @@ namespace Backups
     {
         public BackupFile(string filePath, string fileName)
         {
+            BackupFileInfo = new FileInfo(filePath + "/" + fileName);
+            Name = BackupFileInfo.Name;
+            FullName = BackupFileInfo.FullName;
             FilePath = filePath;
-            Name = fileName;
-            FullName = filePath + "/" + fileName;
         }
 
         public string FilePath { get; }
+        public FileInfo BackupFileInfo { get; }
         public string Name { get; }
         public string FullName { get; }
-
-        // public void Update()
-        // {
-        //     Changed = false || LastUpdate != File.GetLastWriteTime(FullName);
-        //     LastUpdate = File.GetLastWriteTime(FullName);
-        //     BackupFileInfo = new FileInfo(FullName);
-        // }
     }
 }
