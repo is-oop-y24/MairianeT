@@ -9,13 +9,11 @@ namespace Backups
         {
             BackupFiles = new List<BackupFile>();
             RestorePoints = new List<RestorePoint>();
-            VirtualBackups = new List<VirtualBackup>();
             Algorithm = algorithm;
             CurrRepository = new Repository();
             Path = CurrRepository.MakeDirectory(path);
         }
 
-        private List<VirtualBackup> VirtualBackups { get; }
         private string Path { get; }
         private List<BackupFile> BackupFiles { get; }
         private List<RestorePoint> RestorePoints { get; }
@@ -40,10 +38,12 @@ namespace Backups
             RestorePoints.Add(newRestorePoint);
         }
 
-        public void MakeVirtualBackup()
+        public void MakeVirtualMemory()
         {
-            var newVirtualRestorePoint = new VirtualBackup(BackupFiles);
-            VirtualBackups.Add(newVirtualRestorePoint);
+            foreach (BackupFile file in BackupFiles)
+            {
+                file.AddFileData();
+            }
         }
 
         public bool CheckRestorePoint(int restorePointNumber, int filesNumber)
@@ -54,11 +54,6 @@ namespace Backups
         public bool IsFileHere(int restorePointNumber, string filePath)
         {
             return RestorePoints[restorePointNumber - 1].ZipFiles.Any(file => file.Name == filePath);
-        }
-
-        public bool CheckVirtualBackup(int virtualBackupNumber, string filePath)
-        {
-            return VirtualBackups[virtualBackupNumber - 1].Files.Any(file => file == filePath);
         }
     }
 }

@@ -5,9 +5,8 @@
         void Add(string filePath, string fileName);
         void Remove(string filePath, string fileName);
         void MakeRestorePoint();
-        void MakeVirtualBackup();
+        void MakeVirtualMemory();
         bool CheckRestorePoint(int restorePointNumber, int filesNumber);
-        bool CheckVirtualBackup(int virtualRestorePointNumber, string filePath);
         bool IsFileHere(int restorePointNumber, string filePath);
     }
 }
