@@ -8,12 +8,13 @@ namespace Backups
             public List<ZipFile> MakeStorage(List<BackupFile> filesToSave, string path, string restorePointNumber)
             {
                 var zipFiles = new List<ZipFile>();
+                var toSave = new Repository();
                 foreach (BackupFile file in filesToSave)
                 {
                     string zipName = path + "/" + file.Name + "_" + restorePointNumber + ".zip";
                     var zip = new ZipFile();
                     zip.AddFile(file.FullName, "/");
-                    zip.Save(zipName);
+                    toSave.SaveZip(zip, zipName);
                     zipFiles.Add(zip);
                 }
 

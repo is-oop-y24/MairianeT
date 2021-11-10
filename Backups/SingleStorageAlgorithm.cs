@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using Ionic.Zip;
 
 namespace Backups
@@ -16,7 +15,8 @@ namespace Backups
                 zip.AddFile(file.FullName, "/");
             }
 
-            zip.Save(zipName);
+            var toSave = new Repository();
+            toSave.SaveZip(zip, zipName);
             zipFiles.Add(zip);
             return zipFiles;
         }
