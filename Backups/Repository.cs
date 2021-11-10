@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Ionic.Zip;
 
 namespace Backups
 {
@@ -9,6 +10,11 @@ namespace Backups
             string directory = path + "/Backup";
             Directory.CreateDirectory(directory);
             return directory;
+        }
+
+        public void SaveZip(ZipFile zip, string name)
+        {
+            zip.Save(name);
         }
     }
 }
