@@ -1,20 +1,32 @@
 ﻿using System;
+using System.IO;
+using System.Net.Sockets;
 
 namespace Banks.Entities
 {
     public class Client
     {
-        private Client(string name, string surname, string address = "", int phoneNumber = 0)
+        public Client(string name, string surname, string address, string passport)
         {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname))
+                throw new Exception("Client has invalid name!");
             Name = name;
             Surname = surname;
             Address = address;
-            PhoneNumber = phoneNumber;
+            Passport = passport;
         }
 
         public string Name { get; }
         public string Surname { get; }
         public string Address { get; set; }
-        public int PhoneNumber { get; set; }
+        public string Passport { get; set; }
+
+        public static ClientBuilder Builder(string name, string surname) =>
+            new ClientBuilder().SetName(name).SetSurname(surname);
+
+        public bool Verified()
+        {
+            return !string.IsNullOrEmpty(Address) && Passport != null;
+        }
     }
 }

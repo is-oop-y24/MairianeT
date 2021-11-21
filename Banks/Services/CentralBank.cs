@@ -5,6 +5,6 @@ namespace Banks.Services
 {
     public class CentralBank
     {
-        public List<Bank> Banks { get; }
+        // public List<Bank> Banks { get; }
     }
 }
