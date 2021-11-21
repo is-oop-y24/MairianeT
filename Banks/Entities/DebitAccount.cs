@@ -6,5 +6,10 @@
             : base(sum, bank)
         {
         }
+
+        public override void RewindTime(int days)
+        {
+            Balance += days * Percent;
+        }
     }
 }

@@ -11,7 +11,18 @@ namespace Banks.Entities
             Limit = bank.CreditLimit;
         }
 
-        public float CreditCommission { get; }
-        public float Limit { get; }
+        public float CreditCommission { get; set; }
+        public float Limit { get; set; }
+
+        public void ChangeLimit(float newLimit)
+        {
+            Limit = newLimit;
+        }
+
+        public override void RewindTime(int days)
+        {
+            if (Limit > Balance)
+                Balance -= Balance * CreditCommission * days;
+        }
     }
 }

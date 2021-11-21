@@ -28,5 +28,9 @@ namespace Banks.Entities
         {
             return !string.IsNullOrEmpty(Address) && Passport != null;
         }
+
+        public void Update(string message)
+        {
+        }
     }
 }

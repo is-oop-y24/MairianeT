@@ -14,7 +14,7 @@ namespace Banks.Entities
 
         public Bank Owner { get; }
         public float Balance { get; protected set; }
-        public float Percent { get; protected set; }
+        public float Percent { get; set; }
         public Transaction LastTransaction { get; set; }
 
         public void Refill(float sum)
@@ -35,6 +35,10 @@ namespace Banks.Entities
             CashWithdrawal(sum);
             account.Refill(sum);
             LastTransaction = new Transaction("transfer", sum, new List<Account> { this, account });
+        }
+
+        public virtual void RewindTime(int days)
+        {
         }
     }
 }

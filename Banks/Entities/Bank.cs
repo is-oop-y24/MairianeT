@@ -8,19 +8,20 @@ namespace Banks.Entities
     public class Bank
     {
         private float _unverifiedLimit;
-        public Bank(string name, float percent, float commission, float creditLimit, float unverifiedLimit, float lowInterest, float averageInterest, float hightInterest)
+        private List<Client> subscribers = new List<Client>();
+        public Bank(string name, float percent, float commission, float creditLimit, float unverifiedLimit, List<float> interests)
         {
             Name = name;
             BankPercent = percent;
             BankCommission = commission;
             CreditLimit = creditLimit;
-            DepositInterests = new List<float>() { lowInterest, averageInterest, hightInterest };
+            DepositInterests = interests;
             _unverifiedLimit = unverifiedLimit;
         }
 
-        public float BankPercent { get; }
+        public float BankPercent { get; set; }
         public float BankCommission { get; }
-        public float CreditLimit { get; }
+        public float CreditLimit { get; set; }
         public string Name { get; }
         public List<float> DepositInterests { get; }
         public Dictionary<Client, List<Account>> ClientsAccounts { get; }
@@ -35,7 +36,7 @@ namespace Banks.Entities
             ClientsAccounts.Add(client, new List<Account>());
         }
 
-        public void AddClientDebitAccount(Client client, string accountType, float sum, int term = 0)
+        public void AddClientAccount(Client client, string accountType, float sum, int term = 0)
         {
             if (ClientsAccounts.Keys.Contains(client))
             {
@@ -93,9 +94,51 @@ namespace Banks.Entities
             RefillCash(client2, account2, sum);
         }
 
-        public void CancelTransaction(Account account)
+        public void Subscribe(Client client)
         {
-            account.LastTransaction.CancelTransaction();
+            subscribers.Add(client);
+        }
+
+        public void ChangePercent(float newPercent)
+        {
+            foreach (Client client in subscribers)
+            {
+                client.Update("Percent changes from " + BankPercent + " to " + newPercent + " in bank " + Name);
+            }
+
+            BankPercent = newPercent;
+            foreach (Account account in ClientsAccounts.Values.SelectMany(accounts => accounts))
+            {
+                account.Percent = newPercent;
+            }
+        }
+
+        public void ChangeCreditLimit(float newLimit)
+        {
+            foreach (Client client in subscribers)
+            {
+                client.Update("Percent changes from " + CreditLimit + " to " + newLimit + " in bank " + Name);
+            }
+
+            foreach (CreditAccount account in ClientsAccounts.Cast<List<Account>>().SelectMany(accounts => accounts).OfType<CreditAccount>())
+            {
+                ChangeLimit(account, newLimit);
+            }
+
+            CreditLimit = newLimit;
+        }
+
+        public void RewindTime(int days)
+        {
+            foreach (Account account in ClientsAccounts.Values.SelectMany(accounts => accounts))
+            {
+                account.RewindTime(days);
+            }
+        }
+
+        private static void ChangeLimit(CreditAccount account, float newLimit)
+        {
+            account.ChangeLimit(newLimit);
         }
     }
 }

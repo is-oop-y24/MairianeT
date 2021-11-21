@@ -35,7 +35,7 @@ namespace Banks.Entities
             LastTransaction = new Transaction("withdrawal", sum, new List<Account> { this });
         }
 
-        public void RewindTime(int days)
+        public override void RewindTime(int days)
         {
             const int daysInYear = 365;
             float dayPercent = Percent / daysInYear;
