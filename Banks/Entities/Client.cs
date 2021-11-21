@@ -31,6 +31,7 @@ namespace Banks.Entities
 
         public void Update(string message)
         {
+            System.Console.WriteLine(message);
         }
     }
 }
