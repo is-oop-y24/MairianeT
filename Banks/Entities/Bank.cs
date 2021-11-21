@@ -7,9 +7,9 @@ namespace Banks.Entities
 {
     public class Bank
     {
-        private float _unverifiedLimit;
+        private double _unverifiedLimit;
         private List<Client> subscribers = new List<Client>();
-        public Bank(string name, float percent, float commission, float creditLimit, float unverifiedLimit, List<float> interests)
+        public Bank(string name, double percent, double commission, double creditLimit, double unverifiedLimit, List<double> interests)
         {
             Name = name;
             BankPercent = percent;
@@ -17,13 +17,14 @@ namespace Banks.Entities
             CreditLimit = creditLimit;
             DepositInterests = interests;
             _unverifiedLimit = unverifiedLimit;
+            ClientsAccounts = new Dictionary<Client, List<Account>>();
         }
 
-        public float BankPercent { get; set; }
-        public float BankCommission { get; }
-        public float CreditLimit { get; set; }
+        public double BankPercent { get; set; }
+        public double BankCommission { get; }
+        public double CreditLimit { get; set; }
         public string Name { get; }
-        public List<float> DepositInterests { get; }
+        public List<double> DepositInterests { get; }
         public Dictionary<Client, List<Account>> ClientsAccounts { get; }
 
         public void AddClient(Client client)
@@ -36,21 +37,24 @@ namespace Banks.Entities
             ClientsAccounts.Add(client, new List<Account>());
         }
 
-        public void AddClientAccount(Client client, string accountType, float sum, int term = 0)
+        public Account AddClientAccount(Client client, string accountType, double sum, int term = 0)
         {
             if (ClientsAccounts.Keys.Contains(client))
             {
                 switch (accountType)
                 {
                     case "debit":
-                        ClientsAccounts[client].Add(new DebitAccount(sum, this));
-                        break;
+                        var debitAccount = new DebitAccount(sum, this);
+                        ClientsAccounts[client].Add(debitAccount);
+                        return debitAccount;
                     case "credit":
-                        ClientsAccounts[client].Add(new CreditAccount(sum, this));
-                        break;
+                        var creditAccount = new CreditAccount(sum, this);
+                        ClientsAccounts[client].Add(creditAccount);
+                        return creditAccount;
                     case "deposit":
-                        ClientsAccounts[client].Add(new DepositAccount(sum, this, term));
-                        break;
+                        var depositAccount = new DepositAccount(sum, this, term);
+                        ClientsAccounts[client].Add(depositAccount);
+                        return depositAccount;
                 }
             }
             else
@@ -58,19 +62,24 @@ namespace Banks.Entities
                 switch (accountType)
                 {
                     case "debit":
-                        ClientsAccounts.Add(client, new List<Account>() { new DebitAccount(sum, this) });
-                        break;
+                        var debitAccount = new DebitAccount(sum, this);
+                        ClientsAccounts.Add(client, new List<Account>() { debitAccount });
+                        return debitAccount;
                     case "credit":
-                        ClientsAccounts.Add(client, new List<Account>() { new CreditAccount(sum, this) });
-                        break;
+                        var creditAccount = new CreditAccount(sum, this);
+                        ClientsAccounts.Add(client, new List<Account>() { creditAccount });
+                        return creditAccount;
                     case "deposit":
-                        ClientsAccounts.Add(client, new List<Account>() { new DepositAccount(sum, this, term) });
-                        break;
+                        var depositAccount = new DepositAccount(sum, this, term);
+                        ClientsAccounts.Add(client, new List<Account>() { depositAccount });
+                        return depositAccount;
                 }
             }
+
+            return null;
         }
 
-        public void RefillCash(Client client, Account account, float sum)
+        public void RefillCash(Client client, Account account, double sum)
         {
             if (!client.Verified() && sum >= _unverifiedLimit)
                 throw new Exception("Client is unverified.");
@@ -79,7 +88,7 @@ namespace Banks.Entities
             account.Refill(sum);
         }
 
-        public void WithdrawalCash(Client client, Account account, float sum)
+        public void WithdrawalCash(Client client, Account account, double sum)
         {
             if (!client.Verified() && sum >= _unverifiedLimit)
                 throw new Exception("Client is unverified.");
@@ -88,7 +97,7 @@ namespace Banks.Entities
             account.CashWithdrawal(sum);
         }
 
-        public void Transfer(Client client1, Client client2, Account account1, Account account2, float sum)
+        public void Transfer(Client client1, Client client2, Account account1, Account account2, double sum)
         {
             WithdrawalCash(client1, account1, sum);
             RefillCash(client2, account2, sum);
@@ -99,7 +108,7 @@ namespace Banks.Entities
             subscribers.Add(client);
         }
 
-        public void ChangePercent(float newPercent)
+        public void ChangePercent(double newPercent)
         {
             foreach (Client client in subscribers)
             {
@@ -113,7 +122,7 @@ namespace Banks.Entities
             }
         }
 
-        public void ChangeCreditLimit(float newLimit)
+        public void ChangeCreditLimit(double newLimit)
         {
             foreach (Client client in subscribers)
             {
@@ -136,7 +145,7 @@ namespace Banks.Entities
             }
         }
 
-        private static void ChangeLimit(CreditAccount account, float newLimit)
+        private static void ChangeLimit(CreditAccount account, double newLimit)
         {
             account.ChangeLimit(newLimit);
         }

@@ -26,7 +26,7 @@ namespace Banks.Entities
 
         public bool Verified()
         {
-            return !string.IsNullOrEmpty(Address) && Passport != null;
+            return !string.IsNullOrEmpty(Address) && !string.IsNullOrEmpty(Passport);
         }
 
         public void Update(string message)

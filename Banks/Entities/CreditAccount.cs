@@ -4,17 +4,17 @@ namespace Banks.Entities
 {
     public class CreditAccount : Account
     {
-        public CreditAccount(float sum, Bank bank)
+        public CreditAccount(double sum, Bank bank)
             : base(sum, bank)
         {
             CreditCommission = bank.BankCommission;
             Limit = bank.CreditLimit;
         }
 
-        public float CreditCommission { get; set; }
-        public float Limit { get; set; }
+        public double CreditCommission { get; set; }
+        public double Limit { get; set; }
 
-        public void ChangeLimit(float newLimit)
+        public void ChangeLimit(double newLimit)
         {
             Limit = newLimit;
         }

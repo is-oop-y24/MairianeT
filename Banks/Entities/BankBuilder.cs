@@ -5,11 +5,11 @@ namespace Banks.Entities
     public class BankBuilder
     {
         private string _name;
-        private float _percent;
-        private float _commission;
-        private float _creditLimit;
-        private float _unverifiedLimit;
-        private List<float> _interests = new List<float>();
+        private double _percent;
+        private double _commission;
+        private double _creditLimit;
+        private double _unverifiedLimit;
+        private List<double> _interests = new List<double>();
 
         public BankBuilder SetName(string name)
         {
@@ -17,25 +17,25 @@ namespace Banks.Entities
             return this;
         }
 
-        public BankBuilder SetPercent(float percent)
+        public BankBuilder SetPercent(double percent)
         {
             _percent = percent;
             return this;
         }
 
-        public BankBuilder SetCommission(float commission)
+        public BankBuilder SetCommission(double commission)
         {
             _commission = commission;
             return this;
         }
 
-        public BankBuilder SetCreditLimit(float creditLimit)
+        public BankBuilder SetCreditLimit(double creditLimit)
         {
             _creditLimit = creditLimit;
             return this;
         }
 
-        public BankBuilder SetInterests(float lowInterest, float averageInterest, float hightInterest)
+        public BankBuilder SetInterests(double lowInterest, double averageInterest, double hightInterest)
         {
             _interests.Add(lowInterest);
             _interests.Add(averageInterest);
@@ -43,7 +43,7 @@ namespace Banks.Entities
             return this;
         }
 
-        public BankBuilder SetUnverifiedLimit(float unverifiedLimit)
+        public BankBuilder SetUnverifiedLimit(double unverifiedLimit)
         {
             _unverifiedLimit = unverifiedLimit;
             return this;

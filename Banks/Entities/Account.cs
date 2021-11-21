@@ -5,7 +5,7 @@ namespace Banks.Entities
 {
     public class Account
     {
-        public Account(float sum, Bank bank)
+        public Account(double sum, Bank bank)
         {
             Balance = sum;
             Percent = bank.BankPercent;
@@ -13,24 +13,24 @@ namespace Banks.Entities
         }
 
         public Bank Owner { get; }
-        public float Balance { get; protected set; }
-        public float Percent { get; set; }
+        public double Balance { get; protected set; }
+        public double Percent { get; set; }
         public Transaction LastTransaction { get; set; }
 
-        public void Refill(float sum)
+        public void Refill(double sum)
         {
             Balance += sum;
             LastTransaction = new Transaction("refill", sum, new List<Account> { this });
         }
 
-        public virtual void CashWithdrawal(float sum)
+        public virtual void CashWithdrawal(double sum)
         {
             if (!(Balance >= sum)) return;
             Balance -= sum;
             LastTransaction = new Transaction("withdrawal", sum, new List<Account> { this });
         }
 
-        public void Transfer(float sum, Account account)
+        public void Transfer(double sum, Account account)
         {
             CashWithdrawal(sum);
             account.Refill(sum);

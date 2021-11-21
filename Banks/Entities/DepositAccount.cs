@@ -9,10 +9,10 @@ namespace Banks.Entities
         private int _currentDate = 0;
         private int _date = 0;
 
-        public DepositAccount(float sum, Bank bank, int term)
+        public DepositAccount(double sum, Bank bank, int term)
         : base(sum, bank)
         {
-            float curPercent;
+            double curPercent;
             if (sum < 50000) curPercent = bank.DepositInterests[0];
             else if (sum < 100000) curPercent = bank.DepositInterests[1];
             else curPercent = bank.DepositInterests[2];
@@ -21,7 +21,7 @@ namespace Banks.Entities
             _term = term;
         }
 
-        public override void CashWithdrawal(float sum)
+        public override void CashWithdrawal(double sum)
         {
             if (_term <= _currentDate && Balance >= sum)
             {
@@ -38,7 +38,7 @@ namespace Banks.Entities
         public override void RewindTime(int days)
         {
             const int daysInYear = 365;
-            float dayPercent = Percent / daysInYear;
+            double dayPercent = Percent / daysInYear;
 
             if (days + _date >= _term)
             {

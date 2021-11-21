@@ -2,14 +2,14 @@
 {
     public class DebitAccount : Account
     {
-        public DebitAccount(float sum, Bank bank)
+        public DebitAccount(double sum, Bank bank)
             : base(sum, bank)
         {
         }
 
         public override void RewindTime(int days)
         {
-            Balance += days * Percent;
+            Balance += Balance * days * Percent;
         }
     }
 }

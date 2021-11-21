@@ -5,6 +5,12 @@ namespace Banks.Services
 {
     public class CentralBank : ICentralBank
     {
+        public CentralBank()
+        {
+            Banks = new List<Bank>();
+            Clients = new List<Client>();
+        }
+
         public List<Bank> Banks { get; }
         public List<Client> Clients { get; }
         public Client NewClient(ClientBuilder builder)
@@ -21,19 +27,19 @@ namespace Banks.Services
             return bank;
         }
 
-        public void NewDebitAccountInBank(Bank bank, Client client, float sum)
+        public Account NewDebitAccountInBank(Bank bank, Client client, double sum)
         {
-            bank.AddClientAccount(client, "debit", sum);
+            return bank.AddClientAccount(client, "debit", sum);
         }
 
-        public void NewDepositAccountInBank(Bank bank, Client client, float sum, int term)
+        public Account NewDepositAccountInBank(Bank bank, Client client, double sum, int term)
         {
-            bank.AddClientAccount(client, "deposit", sum, term);
+            return bank.AddClientAccount(client, "deposit", sum, term);
         }
 
-        public void NewCreditAccountInBank(Bank bank, Client client, float sum)
+        public Account NewCreditAccountInBank(Bank bank, Client client, double sum)
         {
-            bank.AddClientAccount(client, "credit", sum);
+            return bank.AddClientAccount(client, "credit", sum);
         }
 
         public void RewindTime(int days)
@@ -44,12 +50,12 @@ namespace Banks.Services
             }
         }
 
-        public void ChangeCreditLimit(Bank bank, float newLimit)
+        public void ChangeCreditLimit(Bank bank, double newLimit)
         {
             bank.ChangeCreditLimit(newLimit);
         }
 
-        public void ChangePercent(Bank bank, float newPercent)
+        public void ChangePercent(Bank bank, double newPercent)
         {
             bank.ChangePercent(newPercent);
         }
@@ -59,17 +65,17 @@ namespace Banks.Services
             bank.Subscribe(client);
         }
 
-        public void RefillCash(Bank bank, Client client, Account account, float sum)
+        public void RefillCash(Bank bank, Client client, Account account, double sum)
         {
             bank.RefillCash(client, account, sum);
         }
 
-        public void WithdrawalCash(Bank bank, Client client, Account account, float sum)
+        public void WithdrawalCash(Bank bank, Client client, Account account, double sum)
         {
             bank.WithdrawalCash(client, account, sum);
         }
 
-        public void Transfer(Bank bank, Client client1, Client client2, Account account1, Account account2, float sum)
+        public void Transfer(Bank bank, Client client1, Client client2, Account account1, Account account2, double sum)
         {
             bank.Transfer(client1, client2, account1, account2, sum);
         }
