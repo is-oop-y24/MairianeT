@@ -16,7 +16,7 @@ namespace Banks.Tests
         }
 
         [Test]
-        public void Test1()
+        public void AddClientWithoutVerified_TryToRefillMoney()
         {
             BankBuilder bankBuilder = new BankBuilder().SetName("VTB").SetPercent(0.01).SetUnverifiedLimit(50);
             Bank bank = _centralBank.NewBank(bankBuilder);
@@ -30,7 +30,7 @@ namespace Banks.Tests
         }
         
         [Test]
-        public void Test2()
+        public void AddAccountToClient_RewindTime()
         {
              BankBuilder bankBuilder = new BankBuilder().SetName("VTB").SetPercent(0.01);
              Bank bank = _centralBank.NewBank(bankBuilder);
@@ -42,7 +42,7 @@ namespace Banks.Tests
         }
 
         [Test]
-        public void Test3()
+        public void CancelTransaction()
         {
             BankBuilder bankBuilder = new BankBuilder().SetName("VTB").SetPercent(0.01).SetUnverifiedLimit(50);
             Bank bank = _centralBank.NewBank(bankBuilder);
