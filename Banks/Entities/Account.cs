@@ -5,13 +5,15 @@ namespace Banks.Entities
 {
     public class Account
     {
-        public Account(double sum, Bank bank)
+        public Account(double sum, Bank bank, int id)
         {
             Balance = sum;
             Percent = bank.BankPercent;
             Owner = bank;
+            Id = id;
         }
 
+        public int Id { get; }
         public Bank Owner { get; }
         public double Balance { get; protected set; }
         public double Percent { get; set; }

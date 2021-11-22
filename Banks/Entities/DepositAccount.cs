@@ -9,8 +9,8 @@ namespace Banks.Entities
         private int _currentDate = 0;
         private int _date = 0;
 
-        public DepositAccount(double sum, Bank bank, int term)
-        : base(sum, bank)
+        public DepositAccount(double sum, Bank bank, int term, int id)
+        : base(sum, bank, id)
         {
             double curPercent;
             if (sum < 50000) curPercent = bank.DepositInterests[0];

@@ -1,4 +1,5 @@
-﻿using Banks.Entities;
+﻿using System.Collections.Generic;
+using Banks.Entities;
 
 namespace Banks.Services
 {
@@ -23,5 +24,7 @@ namespace Banks.Services
         void WithdrawalCash(Bank bank, Client client, Account account, double sum);
         void Transfer(Bank bank, Client client1, Client client2, Account account1, Account account2, double sum);
         void CancelTransaction(Account account);
+        List<Bank> GetBanks();
+        List<Client> GetClients();
     }
 }

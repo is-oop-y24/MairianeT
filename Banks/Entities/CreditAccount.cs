@@ -4,8 +4,8 @@ namespace Banks.Entities
 {
     public class CreditAccount : Account
     {
-        public CreditAccount(double sum, Bank bank)
-            : base(sum, bank)
+        public CreditAccount(double sum, Bank bank, int id)
+            : base(sum, bank, id)
         {
             CreditCommission = bank.BankCommission;
             Limit = bank.CreditLimit;

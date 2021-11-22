@@ -1,18 +1,13 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Banks.Console;
-using Banks.Entities;
-using Banks.Services;
+﻿using Banks.Console;
 
 namespace Banks
 {
     internal static class Program
     {
-        private static ICentralBank _centralBank = new CentralBank();
+        private static View _view = new View();
         private static void Main()
         {
-            Controller controller = new Controller();
-            controller.Start();
+            // _view.Start();
         }
     }
 }

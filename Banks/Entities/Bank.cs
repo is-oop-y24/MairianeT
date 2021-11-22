@@ -7,7 +7,6 @@ namespace Banks.Entities
 {
     public class Bank
     {
-        private double _unverifiedLimit;
         private List<Client> subscribers = new List<Client>();
         public Bank(string name, double percent, double commission, double creditLimit, double unverifiedLimit, List<double> interests)
         {
@@ -16,7 +15,7 @@ namespace Banks.Entities
             BankCommission = commission;
             CreditLimit = creditLimit;
             DepositInterests = interests;
-            _unverifiedLimit = unverifiedLimit;
+            UnverifiedLimit = unverifiedLimit;
             ClientsAccounts = new Dictionary<Client, List<Account>>();
         }
 
@@ -25,6 +24,7 @@ namespace Banks.Entities
         public double CreditLimit { get; set; }
         public string Name { get; }
         public List<double> DepositInterests { get; }
+        public double UnverifiedLimit { get; }
         public Dictionary<Client, List<Account>> ClientsAccounts { get; }
 
         public void AddClient(Client client)
@@ -37,22 +37,22 @@ namespace Banks.Entities
             ClientsAccounts.Add(client, new List<Account>());
         }
 
-        public Account AddClientAccount(Client client, string accountType, double sum, int term = 0)
+        public Account AddClientAccount(Client client, string accountType, double sum, int id, int term = 0)
         {
             if (ClientsAccounts.Keys.Contains(client))
             {
                 switch (accountType)
                 {
                     case "debit":
-                        var debitAccount = new DebitAccount(sum, this);
+                        var debitAccount = new DebitAccount(sum, this, id);
                         ClientsAccounts[client].Add(debitAccount);
                         return debitAccount;
                     case "credit":
-                        var creditAccount = new CreditAccount(sum, this);
+                        var creditAccount = new CreditAccount(sum, this, id);
                         ClientsAccounts[client].Add(creditAccount);
                         return creditAccount;
                     case "deposit":
-                        var depositAccount = new DepositAccount(sum, this, term);
+                        var depositAccount = new DepositAccount(sum, this, term, id);
                         ClientsAccounts[client].Add(depositAccount);
                         return depositAccount;
                 }
@@ -62,15 +62,15 @@ namespace Banks.Entities
                 switch (accountType)
                 {
                     case "debit":
-                        var debitAccount = new DebitAccount(sum, this);
+                        var debitAccount = new DebitAccount(sum, this, id);
                         ClientsAccounts.Add(client, new List<Account>() { debitAccount });
                         return debitAccount;
                     case "credit":
-                        var creditAccount = new CreditAccount(sum, this);
+                        var creditAccount = new CreditAccount(sum, this, id);
                         ClientsAccounts.Add(client, new List<Account>() { creditAccount });
                         return creditAccount;
                     case "deposit":
-                        var depositAccount = new DepositAccount(sum, this, term);
+                        var depositAccount = new DepositAccount(sum, this, term, id);
                         ClientsAccounts.Add(client, new List<Account>() { depositAccount });
                         return depositAccount;
                 }
@@ -81,7 +81,7 @@ namespace Banks.Entities
 
         public void RefillCash(Client client, Account account, double sum)
         {
-            if (!client.Verified() && sum >= _unverifiedLimit)
+            if (!client.Verified() && sum >= UnverifiedLimit)
                 throw new Exception("Client is unverified.");
             if (!ClientsAccounts[client].Contains(account))
                 throw new Exception("There is not account.");
@@ -90,7 +90,7 @@ namespace Banks.Entities
 
         public void WithdrawalCash(Client client, Account account, double sum)
         {
-            if (!client.Verified() && sum >= _unverifiedLimit)
+            if (!client.Verified() && sum >= UnverifiedLimit)
                 throw new Exception("Client is unverified.");
             if (!ClientsAccounts[client].Contains(account))
                 throw new Exception("There is not account.");

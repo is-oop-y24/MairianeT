@@ -2,8 +2,8 @@
 {
     public class DebitAccount : Account
     {
-        public DebitAccount(double sum, Bank bank)
-            : base(sum, bank)
+        public DebitAccount(double sum, Bank bank, int id)
+            : base(sum, bank, id)
         {
         }
 

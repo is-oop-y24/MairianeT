@@ -5,6 +5,7 @@ namespace Banks.Services
 {
     public class CentralBank : ICentralBank
     {
+        private int id = -1;
         public CentralBank()
         {
             Banks = new List<Bank>();
@@ -29,17 +30,20 @@ namespace Banks.Services
 
         public Account NewDebitAccountInBank(Bank bank, Client client, double sum)
         {
-            return bank.AddClientAccount(client, "debit", sum);
+            id++;
+            return bank.AddClientAccount(client, "debit", sum, id);
         }
 
         public Account NewDepositAccountInBank(Bank bank, Client client, double sum, int term)
         {
-            return bank.AddClientAccount(client, "deposit", sum, term);
+            id++;
+            return bank.AddClientAccount(client, "deposit", sum, id, term);
         }
 
         public Account NewCreditAccountInBank(Bank bank, Client client, double sum)
         {
-            return bank.AddClientAccount(client, "credit", sum);
+            id++;
+            return bank.AddClientAccount(client, "credit", sum, id);
         }
 
         public void RewindTime(int days)
@@ -83,6 +87,16 @@ namespace Banks.Services
         public void CancelTransaction(Account account)
         {
             account.LastTransaction.CancelTransaction();
+        }
+
+        public List<Bank> GetBanks()
+        {
+            return Banks;
+        }
+
+        public List<Client> GetClients()
+        {
+            return Clients;
         }
     }
 }

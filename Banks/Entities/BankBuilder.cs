@@ -35,11 +35,11 @@ namespace Banks.Entities
             return this;
         }
 
-        public BankBuilder SetInterests(double lowInterest, double averageInterest, double hightInterest)
+        public BankBuilder SetInterests(double lowInterest, double averageInterest, double highInterest)
         {
             _interests.Add(lowInterest);
             _interests.Add(averageInterest);
-            _interests.Add(hightInterest);
+            _interests.Add(highInterest);
             return this;
         }
 
