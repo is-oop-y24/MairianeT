@@ -3,7 +3,7 @@ using System.Transactions;
 
 namespace Banks.Entities
 {
-    public class Account
+    public abstract class Account
     {
         public Account(double sum, Bank bank, int id)
         {
