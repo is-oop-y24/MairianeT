@@ -7,7 +7,7 @@ namespace Banks
         private static View _view = new View();
         private static void Main()
         {
-             _view.Start();
+            _view.Start();
         }
     }
 }

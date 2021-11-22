@@ -22,21 +22,21 @@ namespace Banks.Entities
         public void Refill(double sum)
         {
             Balance += sum;
-            LastTransaction = new Transaction("refill", sum, new List<Account> { this });
+            LastTransaction = new Transaction(TransactionType.Refill, sum, new List<Account> { this });
         }
 
         public virtual void CashWithdrawal(double sum)
         {
             if (!(Balance >= sum)) return;
             Balance -= sum;
-            LastTransaction = new Transaction("withdrawal", sum, new List<Account> { this });
+            LastTransaction = new Transaction(TransactionType.Withdraw, sum, new List<Account> { this });
         }
 
         public void Transfer(double sum, Account account)
         {
             CashWithdrawal(sum);
             account.Refill(sum);
-            LastTransaction = new Transaction("transfer", sum, new List<Account> { this, account });
+            LastTransaction = new Transaction(TransactionType.Transfer, sum, new List<Account> { this, account });
         }
 
         public virtual void RewindTime(int days)

@@ -32,7 +32,7 @@ namespace Banks.Entities
                 throw new BanksException("You cannot withdraw money from this account");
             }
 
-            LastTransaction = new Transaction("withdrawal", sum, new List<Account> { this });
+            LastTransaction = new Transaction(TransactionType.Withdraw, sum, new List<Account> { this });
         }
 
         public override void RewindTime(int days)

@@ -4,28 +4,28 @@ namespace Banks.Entities
 {
     public class Transaction
     {
-        public Transaction(string name, double sum, List<Account> accounts)
+        public Transaction(TransactionType transactionType, double sum, List<Account> accounts)
         {
             BankAccounts = accounts;
             Sum = sum;
-            TranactionName = name;
+            Type = transactionType;
         }
 
         public double Sum { get; }
-        public string TranactionName { get; }
+        public TransactionType Type { get; }
         public List<Account> BankAccounts { get; }
 
         public void CancelTransaction()
         {
-            switch (TranactionName)
+            switch (Type)
             {
-                case "refill":
+                case TransactionType.Refill:
                     BankAccounts[0].CashWithdrawal(Sum);
                     break;
-                case "withdrawal":
+                case TransactionType.Withdraw:
                     BankAccounts[0].Refill(Sum);
                     break;
-                case "transfer":
+                case TransactionType.Transfer:
                     BankAccounts[0].Refill(Sum);
                     BankAccounts[1].CashWithdrawal(Sum);
                     break;
