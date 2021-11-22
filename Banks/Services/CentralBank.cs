@@ -31,19 +31,19 @@ namespace Banks.Services
         public Account NewDebitAccountInBank(Bank bank, Client client, double sum)
         {
             id++;
-            return bank.AddClientAccount(client, "debit", sum, id);
+            return bank.AddClientAccount(client, AccountType.Debit, sum, id);
         }
 
         public Account NewDepositAccountInBank(Bank bank, Client client, double sum, int term)
         {
             id++;
-            return bank.AddClientAccount(client, "deposit", sum, id, term);
+            return bank.AddClientAccount(client, AccountType.Deposit, sum, id, term);
         }
 
         public Account NewCreditAccountInBank(Bank bank, Client client, double sum)
         {
             id++;
-            return bank.AddClientAccount(client, "credit", sum, id);
+            return bank.AddClientAccount(client, AccountType.Credit, sum, id);
         }
 
         public void RewindTime(int days)

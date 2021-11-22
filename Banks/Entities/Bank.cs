@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Banks.Services;
 
 namespace Banks.Entities
 {
@@ -37,21 +38,21 @@ namespace Banks.Entities
             ClientsAccounts.Add(client, new List<Account>());
         }
 
-        public Account AddClientAccount(Client client, string accountType, double sum, int id, int term = 0)
+        public Account AddClientAccount(Client client, AccountType accountType, double sum, int id, int term = 0)
         {
             if (ClientsAccounts.Keys.Contains(client))
             {
                 switch (accountType)
                 {
-                    case "debit":
+                    case AccountType.Debit:
                         var debitAccount = new DebitAccount(sum, this, id);
                         ClientsAccounts[client].Add(debitAccount);
                         return debitAccount;
-                    case "credit":
+                    case AccountType.Credit:
                         var creditAccount = new CreditAccount(sum, this, id);
                         ClientsAccounts[client].Add(creditAccount);
                         return creditAccount;
-                    case "deposit":
+                    case AccountType.Deposit:
                         var depositAccount = new DepositAccount(sum, this, term, id);
                         ClientsAccounts[client].Add(depositAccount);
                         return depositAccount;
@@ -61,15 +62,15 @@ namespace Banks.Entities
             {
                 switch (accountType)
                 {
-                    case "debit":
+                    case AccountType.Debit:
                         var debitAccount = new DebitAccount(sum, this, id);
                         ClientsAccounts.Add(client, new List<Account>() { debitAccount });
                         return debitAccount;
-                    case "credit":
+                    case AccountType.Credit:
                         var creditAccount = new CreditAccount(sum, this, id);
                         ClientsAccounts.Add(client, new List<Account>() { creditAccount });
                         return creditAccount;
-                    case "deposit":
+                    case AccountType.Deposit:
                         var depositAccount = new DepositAccount(sum, this, term, id);
                         ClientsAccounts.Add(client, new List<Account>() { depositAccount });
                         return depositAccount;
