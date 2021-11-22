@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Banks.Services;
+using Banks.Tools;
 
 namespace Banks.Entities
 {
@@ -32,7 +33,7 @@ namespace Banks.Entities
         {
             if (ClientsAccounts.Keys.Contains(client))
             {
-                throw new Exception("This client is already in the bank.");
+                throw new BanksException("This client is already in the bank.");
             }
 
             ClientsAccounts.Add(client, new List<Account>());
@@ -83,18 +84,18 @@ namespace Banks.Entities
         public void RefillCash(Client client, Account account, double sum)
         {
             if (!client.Verified() && sum >= UnverifiedLimit)
-                throw new Exception("Client is unverified.");
+                throw new BanksException("Client is unverified.");
             if (!ClientsAccounts[client].Contains(account))
-                throw new Exception("There is not account.");
+                throw new BanksException("There is not account.");
             account.Refill(sum);
         }
 
         public void WithdrawalCash(Client client, Account account, double sum)
         {
             if (!client.Verified() && sum >= UnverifiedLimit)
-                throw new Exception("Client is unverified.");
+                throw new BanksException("Client is unverified.");
             if (!ClientsAccounts[client].Contains(account))
-                throw new Exception("There is not account.");
+                throw new BanksException("There is not account.");
             account.CashWithdrawal(sum);
         }
 

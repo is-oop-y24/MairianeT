@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Banks.Entities;
 using Banks.Services;
+using Banks.Tools;
 
 namespace Banks.Tests
 {
@@ -23,7 +24,7 @@ namespace Banks.Tests
             ClientBuilder clientBuilder = new ClientBuilder().SetName("Pavel").SetSurname("Ivanov");
             Client client = _centralBank.NewClient(clientBuilder);
             Account account = _centralBank.NewDebitAccountInBank(bank, client, 100);
-            Assert.Catch<Exception>((() =>
+            Assert.Catch<BanksException>((() =>
             {
                 _centralBank.RefillCash(bank, client, account, 60);
             }), "test 1");

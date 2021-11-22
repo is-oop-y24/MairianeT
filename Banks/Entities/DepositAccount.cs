@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Banks.Tools;
 
 namespace Banks.Entities
 {
@@ -29,7 +29,7 @@ namespace Banks.Entities
             }
             else
             {
-                throw new Exception("You cannot withdraw money from this account");
+                throw new BanksException("You cannot withdraw money from this account");
             }
 
             LastTransaction = new Transaction("withdrawal", sum, new List<Account> { this });

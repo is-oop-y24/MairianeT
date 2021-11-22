@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net.Sockets;
+﻿using Banks.Tools;
 
 namespace Banks.Entities
 {
@@ -9,7 +7,7 @@ namespace Banks.Entities
         public Client(string name, string surname, string address, string passport)
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname))
-                throw new Exception("Client has invalid name!");
+                throw new BanksException("Client has invalid name!");
             Name = name;
             Surname = surname;
             Address = address;
