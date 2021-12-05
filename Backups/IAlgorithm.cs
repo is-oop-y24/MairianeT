@@ -6,5 +6,6 @@ namespace Backups
     public interface IAlgorithm
     {
         List<ZipFile> MakeStorage(List<BackupFile> filesToSave, string path, string restorePointNumber);
+        string ZipName();
     }
 }
