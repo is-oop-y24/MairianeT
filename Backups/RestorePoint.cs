@@ -11,8 +11,10 @@ namespace Backups
             CreationTime = DateTime.Now;
             Files = filesToSave;
             ZipFiles = algorithm.MakeStorage(filesToSave, path, restorePointNumber);
+            RestorePointNumber = restorePointNumber;
         }
 
+        public string RestorePointNumber { get; }
         public DateTime CreationTime { get; }
         public List<BackupFile> Files { get; }
         public List<ZipFile> ZipFiles { get; }

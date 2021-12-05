@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Backups;
 using BackupsExtra.Entities;
 using BackupsExtra.Tool;
@@ -60,6 +61,30 @@ namespace BackupsExtra.Services
                     break;
                 default:
                     throw new BackupsExtraException("Incorrect Limit Type");
+            }
+        }
+
+        public void Merge()
+        {
+            if (Algorithm is SingleStorageAlgorithm)
+            {
+                RestorePoints.RemoveAt(RestorePoints.Count - 2);
+            }
+            else
+            {
+                foreach (BackupFile file in RestorePoints[^2].Files)
+                {
+                    if (RestorePoints[^1].Files.Contains(file))
+                    {
+                        _repository.RemoveFile(this, RestorePoints[^2], file);
+                    }
+                    else
+                    {
+                        RestorePoints[^1].Files.Add(file);
+                        RestorePoints[^2].Files.Remove(file);
+                        _repository.RenameFile(this, RestorePoints[^2], RestorePoints[^1], file);
+                    }
+                }
             }
         }
     }
