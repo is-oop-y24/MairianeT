@@ -14,9 +14,10 @@ namespace Backups
             RestorePointNumber = restorePointNumber;
         }
 
-        public string RestorePointNumber { get; }
-        public DateTime CreationTime { get; }
-        public List<BackupFile> Files { get; }
-        public List<ZipFile> ZipFiles { get; }
+        public string RestorePointNumber { get; set; }
+
+        public DateTime CreationTime { get; set; }
+        public List<BackupFile> Files { get; set; }
+        public List<ZipFile> ZipFiles { get; set; }
     }
 }

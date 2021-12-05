@@ -5,17 +5,17 @@ namespace BackupsExtra.Entities
 {
     public class NumberLimit : Limit
     {
-        private int _maxPoints;
-
         public NumberLimit(BackupExtra backup, int maxPoints)
         : base(backup)
         {
-            _maxPoints = maxPoints;
+            MaxPoints = maxPoints;
         }
+
+        private int MaxPoints { get; set; }
 
         public override int GetLimit()
         {
-            int limits = Backup.RestorePoints.Count - _maxPoints;
+            int limits = Backup.RestorePoints.Count - MaxPoints;
             return limits > 0 ? limits : 0;
         }
     }

@@ -1,62 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using Backups;
 using BackupsExtra.Entities;
 using BackupsExtra.Tool;
 
 namespace BackupsExtra.Services
 {
-    public class BackupExtra : Backup, IBackup
+    public class BackupExtra : Backup
     {
-        private Limit _timeLimit;
-        private Limit _numberLimit;
-        private RepositoryExtra _repository = new RepositoryExtra();
-        public BackupExtra(string path, IAlgorithm algorithm)
+        public BackupExtra(string path, IAlgorithm algorithm, ILogging logging)
         : base(path, algorithm)
         {
+            Logging = logging;
+            Repository = new RepositoryExtra();
         }
+
+        public Limit TimeLimit { get; set; }
+        public Limit NumberLimit { get; set; }
+        public ILogging Logging { get; set; }
+        public RepositoryExtra Repository { get; set; }
 
         public void SetTimeLimit(DateTime dateTime)
         {
-            _timeLimit = new TimeLimit(this, dateTime);
+            TimeLimit = new TimeLimit(this, dateTime);
+            Logging.Logging("Time limit is set to " + dateTime);
         }
 
         public void SetNumberLimit(int maxNumber)
         {
-            _numberLimit = new NumberLimit(this, maxNumber);
-        }
+            NumberLimit = new NumberLimit(this, maxNumber);
+            Logging.Logging("Number limit is set at " + maxNumber + " restore points");
+    }
 
         public void PushToLimit(LimitType type)
         {
             switch (type)
             {
                 case LimitType.Time:
-                    for (int i = 0; i < _timeLimit.GetLimit(); i++)
+                    for (int i = 0; i < TimeLimit.GetLimit(); i++)
                     {
-                        _repository.RemoveRestorePoint(this, i, Algorithm);
+                        Repository.RemoveRestorePoint(this, i, Algorithm);
                     }
+
+                    Logging.Logging("restore points not running by the time limit deleted");
 
                     break;
                 case LimitType.Number:
-                    for (int i = 0; i < _numberLimit.GetLimit(); i++)
+                    for (int i = 0; i < NumberLimit.GetLimit(); i++)
                     {
-                        _repository.RemoveRestorePoint(this, i, Algorithm);
+                        Repository.RemoveRestorePoint(this, i, Algorithm);
                     }
+
+                    Logging.Logging("restore points not running by the number limit deleted");
 
                     break;
                 case LimitType.HybridAll:
-                    for (int i = 0; i < Math.Max(_numberLimit.GetLimit(), _timeLimit.GetLimit()); i++)
+                    for (int i = 0; i < Math.Max(NumberLimit.GetLimit(), TimeLimit.GetLimit()); i++)
                     {
-                        _repository.RemoveRestorePoint(this, i, Algorithm);
+                        Repository.RemoveRestorePoint(this, i, Algorithm);
                     }
+
+                    Logging.Logging("restore points not running by the all limits deleted");
 
                     break;
                 case LimitType.HybridLeastOne:
-                    for (int i = 0; i < Math.Min(_numberLimit.GetLimit(), _timeLimit.GetLimit()); i++)
+                    for (int i = 0; i < Math.Min(NumberLimit.GetLimit(), TimeLimit.GetLimit()); i++)
                     {
-                        _repository.RemoveRestorePoint(this, i, Algorithm);
+                        Repository.RemoveRestorePoint(this, i, Algorithm);
                     }
+
+                    Logging.Logging("restore points that do not pass at least one limit are deleted");
 
                     break;
                 default:
@@ -72,20 +86,77 @@ namespace BackupsExtra.Services
             }
             else
             {
+                var filesToRemove = new List<BackupFile>();
+                var filesToReplace = new List<BackupFile>();
                 foreach (BackupFile file in RestorePoints[^2].Files)
                 {
                     if (RestorePoints[^1].Files.Contains(file))
                     {
-                        _repository.RemoveFile(this, RestorePoints[^2], file);
+                        filesToRemove.Add(file);
                     }
                     else
                     {
                         RestorePoints[^1].Files.Add(file);
                         RestorePoints[^2].Files.Remove(file);
-                        _repository.RenameFile(this, RestorePoints[^2], RestorePoints[^1], file);
+                        filesToReplace.Add(file);
                     }
                 }
+
+                foreach (BackupFile file in filesToRemove)
+                {
+                    Repository.RemoveFile(this, RestorePoints[^2], file);
+                }
+
+                foreach (BackupFile file in filesToReplace)
+                {
+                    Repository.RenameFile(this, RestorePoints[^2], RestorePoints[^1], file);
+                }
+
+                RestorePoints.RemoveAt(RestorePoints.Count - 2);
             }
+
+            Logging.Logging("merge restore points");
+        }
+
+        public void RecoveringToOriginalLocation(BackupFile file)
+        {
+            Repository.FileRecovery(file);
+            Logging.Logging("the file has been restored to original location");
+        }
+
+        public void RecoveringToDifferentLocation(BackupFile file, string path)
+        {
+            Repository.FileRecoveryToPath(file, path);
+            Logging.Logging("the file has been restored to different location");
+        }
+
+        public void AddFile(string filePath, string fileName)
+        {
+            Add(filePath, fileName);
+            Logging.Logging("file has been added");
+        }
+
+        public void RemoveFile(string filePath, string fileName)
+        {
+            Remove(filePath, fileName);
+            Logging.Logging("file has been removed");
+        }
+
+        public void MakeRestorePointExtra()
+        {
+            MakeRestorePoint();
+            Logging.Logging("Restore point has been created");
+        }
+
+        public void MakeVirtualMemoryExtra()
+        {
+            MakeVirtualMemory();
+            Logging.Logging("virtual memory has been created");
+        }
+
+        public bool CheckFile(int restorePointNumber, string filePath)
+        {
+            return RestorePoints[restorePointNumber - 1].Files.Any(file => file.Name == filePath);
         }
     }
 }

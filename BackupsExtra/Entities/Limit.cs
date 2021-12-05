@@ -10,7 +10,7 @@ namespace BackupsExtra.Entities
             this.Backup = backup;
         }
 
-        protected BackupExtra Backup { get; }
+        public BackupExtra Backup { get; set; }
 
         public abstract int GetLimit();
     }

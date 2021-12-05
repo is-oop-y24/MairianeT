@@ -7,16 +7,17 @@ namespace BackupsExtra.Entities
 {
     public class TimeLimit : Limit
     {
-        private DateTime _lastTime;
         public TimeLimit(BackupExtra backup, DateTime lastTime)
             : base(backup)
         {
-            _lastTime = lastTime;
+            LastTime = lastTime;
         }
+
+        public DateTime LastTime { get; set; }
 
         public override int GetLimit()
         {
-            return Backup.RestorePoints.Count(rp => DateTime.Compare(rp.CreationTime, _lastTime) <= 0);
+            return Backup.RestorePoints.Count(rp => DateTime.Compare(rp.CreationTime, LastTime) <= 0);
         }
     }
 }

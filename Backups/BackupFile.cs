@@ -14,10 +14,11 @@ namespace Backups
             FilePath = filePath;
         }
 
-        public string FilePath { get; }
-        public FileInfo BackupFileInfo { get; }
-        public string Name { get; }
-        public string FullName { get; }
+        public string FilePath { get; set; }
+
+        public FileInfo BackupFileInfo { get; set; }
+        public string Name { get; set; }
+        public string FullName { get; set; }
 
         public void AddFileData()
         {

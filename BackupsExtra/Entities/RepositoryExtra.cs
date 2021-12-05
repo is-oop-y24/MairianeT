@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.Policy;
+﻿using System.IO;
 using Backups;
 using BackupsExtra.Services;
 
@@ -12,7 +10,7 @@ namespace BackupsExtra.Entities
         {
             if (algorithm is SingleStorageAlgorithm)
             {
-                File.Delete(algorithm.ZipName());
+                File.Delete(backup.Path + "/RestorePoint" + backup.RestorePoints[restorePointNumber].RestorePointNumber + ".zip");
             }
             else
             {
@@ -36,6 +34,16 @@ namespace BackupsExtra.Entities
             string oldName = backup.Path + "/" + file.Name + "_" + oldRestorePoint.RestorePointNumber + ".zip";
             string newName = backup.Path + "/" + file.Name + "_" + newRestorePoint.RestorePointNumber + ".zip";
             File.Move(oldName, newName);
+        }
+
+        public void FileRecovery(BackupFile file)
+        {
+            File.Create(file.FullName);
+        }
+
+        public void FileRecoveryToPath(BackupFile file, string path)
+        {
+            File.Create(path + "/" + file.Name);
         }
     }
 }

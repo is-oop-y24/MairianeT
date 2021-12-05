@@ -14,11 +14,11 @@ namespace Backups
             Path = CurrRepository.MakeDirectory(path);
         }
 
-        public string Path { get; }
-        public List<BackupFile> BackupFiles { get; }
-        public List<RestorePoint> RestorePoints { get; }
-        public IAlgorithm Algorithm { get; }
-        public Repository CurrRepository { get; }
+        public string Path { get; set; }
+        public List<BackupFile> BackupFiles { get; set; }
+        public List<RestorePoint> RestorePoints { get; set; }
+        public IAlgorithm Algorithm { get; set; }
+        public Repository CurrRepository { get; set; }
 
         public void Add(string filePath, string fileName)
         {
