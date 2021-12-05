@@ -8,15 +8,12 @@ namespace Backups
         private string _data;
         public BackupFile(string filePath, string fileName)
         {
-            BackupFileInfo = new FileInfo(filePath + "/" + fileName);
-            Name = BackupFileInfo.Name;
-            FullName = BackupFileInfo.FullName;
+            Name = fileName;
+            FullName = filePath + "/" + fileName;
             FilePath = filePath;
         }
 
         public string FilePath { get; set; }
-
-        public FileInfo BackupFileInfo { get; set; }
         public string Name { get; set; }
         public string FullName { get; set; }
 

@@ -15,6 +15,7 @@ namespace BackupsExtra
             var backup = new BackupExtra(@"C:\Users\User\Desktop", algorithm, new ConsoleLogging());
             backup.AddFile(@"C:\Users\User\Desktop", "A");
             backup.AddFile(@"C:\Users\User\Desktop", "B");
+
             var saveJob = new Saving();
             saveJob.SaveJob(backup, @"C:\Users\User\Desktop\BackupJob.json");
         }
