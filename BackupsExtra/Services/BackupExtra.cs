@@ -143,6 +143,11 @@ namespace BackupsExtra.Services
             Logging.Logging("Restore point has been created");
         }
 
+        public void RemoveVirtualMemory()
+        {
+            BackupFiles.Clear();
+        }
+
         public void MakeVirtualMemoryExtra()
         {
             MakeVirtualMemory();
