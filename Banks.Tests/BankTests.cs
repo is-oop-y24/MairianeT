@@ -9,7 +9,7 @@ namespace Banks.Tests
     public class BankTests
     {
         private ICentralBank _centralBank;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -29,7 +29,7 @@ namespace Banks.Tests
                 _centralBank.RefillCash(bank, client, account, 60);
             }), "test 1");
         }
-        
+
         [Test]
         public void AddAccountToClient_RewindTime()
         {
