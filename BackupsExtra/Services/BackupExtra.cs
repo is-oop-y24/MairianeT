@@ -31,51 +31,46 @@ namespace BackupsExtra.Services
         {
             NumberLimit = new NumberLimit(this, maxNumber);
             Logging.Logging("Number limit is set at " + maxNumber + " restore points");
-    }
+        }
 
-        public void PushToLimit(LimitType type)
+        public void PushToNumberLimit()
         {
-            switch (type)
+            for (int i = 0; i < NumberLimit.GetLimit(); i++)
             {
-                case LimitType.Time:
-                    for (int i = 0; i < TimeLimit.GetLimit(); i++)
-                    {
-                        Repository.RemoveRestorePoint(this, i, Algorithm);
-                    }
-
-                    Logging.Logging("restore points not running by the time limit deleted");
-
-                    break;
-                case LimitType.Number:
-                    for (int i = 0; i < NumberLimit.GetLimit(); i++)
-                    {
-                        Repository.RemoveRestorePoint(this, i, Algorithm);
-                    }
-
-                    Logging.Logging("restore points not running by the number limit deleted");
-
-                    break;
-                case LimitType.HybridAll:
-                    for (int i = 0; i < Math.Max(NumberLimit.GetLimit(), TimeLimit.GetLimit()); i++)
-                    {
-                        Repository.RemoveRestorePoint(this, i, Algorithm);
-                    }
-
-                    Logging.Logging("restore points not running by the all limits deleted");
-
-                    break;
-                case LimitType.HybridLeastOne:
-                    for (int i = 0; i < Math.Min(NumberLimit.GetLimit(), TimeLimit.GetLimit()); i++)
-                    {
-                        Repository.RemoveRestorePoint(this, i, Algorithm);
-                    }
-
-                    Logging.Logging("restore points that do not pass at least one limit are deleted");
-
-                    break;
-                default:
-                    throw new BackupsExtraException("Incorrect Limit Type");
+                Repository.RemoveRestorePoint(this, i, Algorithm);
             }
+
+            Logging.Logging("restore points not running by the number limit deleted");
+        }
+
+        public void PushToTimeLimit()
+        {
+            for (int i = 0; i < TimeLimit.GetLimit(); i++)
+            {
+                Repository.RemoveRestorePoint(this, i, Algorithm);
+            }
+
+            Logging.Logging("restore points not running by the time limit deleted");
+        }
+
+        public void PushToHybridAllLimit()
+        {
+            for (int i = 0; i < Math.Max(NumberLimit.GetLimit(), TimeLimit.GetLimit()); i++)
+            {
+                Repository.RemoveRestorePoint(this, i, Algorithm);
+            }
+
+            Logging.Logging("restore points not running by the all limits deleted");
+        }
+
+        public void PushToHybridLeastOneLimit()
+        {
+            for (int i = 0; i < Math.Min(NumberLimit.GetLimit(), TimeLimit.GetLimit()); i++)
+            {
+                Repository.RemoveRestorePoint(this, i, Algorithm);
+            }
+
+            Logging.Logging("restore points that do not pass at least one limit are deleted");
         }
 
         public void Merge()

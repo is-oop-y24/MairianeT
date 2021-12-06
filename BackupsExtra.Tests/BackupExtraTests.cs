@@ -46,7 +46,7 @@ namespace BackupsExtra.Tests
             _backup.RemoveFile(pathFile, "B");
             _backup.MakeRestorePointExtra();
             _backup.SetNumberLimit(1);
-            _backup.PushToLimit(LimitType.Number);
+            _backup.PushToNumberLimit();
             int newNumberOfRestorePoints = 1;
             Assert.True(newNumberOfRestorePoints == _backup.RestorePoints.Count);
 
@@ -64,7 +64,7 @@ namespace BackupsExtra.Tests
             _backup.MakeRestorePointExtra();
 
             _backup.SetTimeLimit(dateTimeLimit);
-            _backup.PushToLimit(LimitType.Time);
+            _backup.PushToTimeLimit();
             int newNumberOfRestorePoints = 1;
             Assert.True(newNumberOfRestorePoints == _backup.RestorePoints.Count);
         }
