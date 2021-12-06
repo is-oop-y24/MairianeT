@@ -10,13 +10,21 @@ namespace BackupsExtra.Entities
         {
             if (algorithm is SingleStorageAlgorithm)
             {
-                File.Delete(backup.Path + "/RestorePoint" + backup.RestorePoints[restorePointNumber].RestorePointNumber + ".zip");
+                if (File.Exists(backup.Path + "/RestorePoint" +
+                                backup.RestorePoints[restorePointNumber].RestorePointNumber + ".zip"))
+                {
+                    File.Delete(backup.Path + "/RestorePoint" + backup.RestorePoints[restorePointNumber].RestorePointNumber + ".zip");
+                }
             }
             else
             {
                 foreach (BackupFile file in backup.RestorePoints[restorePointNumber].Files)
                 {
-                    File.Delete(backup.Path + "/" + file.Name + "_" + backup.RestorePoints[restorePointNumber].RestorePointNumber + ".zip");
+                    if (File.Exists(backup.Path + "/" + file.Name + "_" +
+                                    backup.RestorePoints[restorePointNumber].RestorePointNumber + ".zip"))
+                    {
+                        File.Delete(backup.Path + "/" + file.Name + "_" + backup.RestorePoints[restorePointNumber].RestorePointNumber + ".zip");
+                    }
                 }
             }
 
@@ -25,7 +33,11 @@ namespace BackupsExtra.Entities
 
         public void RemoveFile(BackupExtra backup, RestorePoint restorePoint, BackupFile file)
         {
-            File.Delete(backup.Path + "/" + file.Name + "_" + restorePoint.RestorePointNumber + ".zip");
+            if (File.Exists(backup.Path + "/" + file.Name + "_" + restorePoint.RestorePointNumber + ".zip"))
+            {
+                File.Delete(backup.Path + "/" + file.Name + "_" + restorePoint.RestorePointNumber + ".zip");
+            }
+
             restorePoint.Files.Remove(file);
         }
 
