@@ -11,10 +11,12 @@ namespace Reports.Server.Database
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<TaskModel> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<TaskModel>().ToTable("Tasks");
             base.OnModelCreating(modelBuilder);
         }
     }

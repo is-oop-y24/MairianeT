@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace Reports.DAL.Entities
 {
     public class Employee
     {
-        public Guid Id { get; private init; }
+        public Guid Id { get; set; }
 
-        public string Name { get; private init; }
+        public string Name { get; set; }
+        public EmployeeType Role { get; set; }
+        public Guid LeaderId { get; set; }
 
-        private Employee()
+        public Employee()
         {
         }
 
-        public Employee(Guid id, string name)
+        public Employee(Guid id, string name, EmployeeType role, Guid leaderId)
         {
             if (id == Guid.Empty)
             {
@@ -26,6 +31,8 @@ namespace Reports.DAL.Entities
 
             Id = id;
             Name = name;
+            Role = role;
+            LeaderId = leaderId;
         }
     }
 }

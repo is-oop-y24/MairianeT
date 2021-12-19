@@ -1,27 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Reports.DAL.Entities;
 using Reports.Server.Controllers;
 using Reports.Server.Database;
+using Task = System.Threading.Tasks.Task;
 
 namespace Reports.Server.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private const string dbPath = "employees.json";
         private readonly ReportsDatabaseContext _context;
 
         public EmployeeService(ReportsDatabaseContext context) {
             _context = context;
         }
 
-        public async Task<Employee> Create(string name)
+        public async Task<Employee> Create(string name, EmployeeType role)
         {
-            var employee = new Employee(Guid.NewGuid(), name);
+            var employee = new Employee(Guid.NewGuid(), name, role, Guid.Empty);
             var employeeFromDb = await _context.Employees.AddAsync(employee);
             await _context.SaveChangesAsync();
             return employee;
@@ -29,29 +31,32 @@ namespace Reports.Server.Services
 
         public Employee FindByName(string name)
         {
-            return JsonConvert.DeserializeObject<Employee[]>(File.ReadAllText(dbPath, Encoding.UTF8))
-                .FirstOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            return Enumerable.FirstOrDefault(_context.Employees, employee => employee.Name == name);
         }
 
-        public Employee FindById(Guid id)
+        public async Task<Employee> FindById(Guid id)
         {
-            Guid fakeGuid = Guid.Parse("ac8ac3ce-f738-4cd6-b131-1aa0e16eaadc");
-            if (id == fakeGuid)
-            {
-                return new Employee(fakeGuid, "Abobus");
-            }
-
-            return null;
+            var employee = await _context.Employees.FindAsync(id);
+            return employee;
         }
 
-        public void Delete(Guid id)
+        public DbSet<Employee> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Employees;
         }
 
-        public Employee Update(Employee entity)
+        public async Task<Employee> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Employee employee = await _context.Employees.FindAsync(id);
+            await Task.Run(() => _context.Employees.Remove(employee));
+            await _context.SaveChangesAsync();
+            return employee;
+        }
+
+        public async Task Update(Employee entity)
+        {
+            _context.Employees.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }
