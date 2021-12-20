@@ -18,9 +18,9 @@ namespace Reports.Server.Services
             _context = context;
         }
 
-        public async Task<TaskModel> Create(string description, Guid employeeId, string creationTime)
+        public async Task<TaskModel> Create(string description, Guid employeeId)
         {
-            var task = new TaskModel(Guid.NewGuid(), employeeId, description, creationTime);
+            var task = new TaskModel(Guid.NewGuid(), employeeId, description);
             var taskFromDb = await _context.Tasks.AddAsync(task);
             await _context.SaveChangesAsync();
             return task;
@@ -43,7 +43,7 @@ namespace Reports.Server.Services
             _context.Tasks.Update(entity);
             await _context.SaveChangesAsync();
         }
-        public async Task<TaskModel> GetTaskByTime(string creationTime)
+        public async Task<TaskModel> GetTaskByTime(DateTime creationTime)
         {
             Guid resultId = Guid.Empty;
             foreach (TaskModel curTask in _context.Tasks)

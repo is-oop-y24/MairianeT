@@ -10,12 +10,12 @@ namespace Reports.DAL.Entities
         public StatusType Status { get; set; }
         public Guid DesignatedEmployeeId { get; set; }
         public Guid Id { get; private init; }
-        public string CreationTime { get; set; }
+        public DateTime CreationTime { get; set; }
         public TaskModel()
         {
         }
 
-        public TaskModel(Guid id, Guid employeeId, string description, string creationTime)
+        public TaskModel(Guid id, Guid employeeId, string description)
         {
             if (id == Guid.Empty)
             {
@@ -31,7 +31,7 @@ namespace Reports.DAL.Entities
             Description = description;
             Status = StatusType.Open;
             DesignatedEmployeeId = employeeId;
-            CreationTime = creationTime;
+            CreationTime = DateTime.Now;
         }
 
         public void ChangeDesignatedEmployee(Guid employeeId)

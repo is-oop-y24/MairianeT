@@ -16,9 +16,9 @@ namespace Reports.Server.Services
             _context = context;
         }
         
-        public async Task<Change> Create(Guid taskId, string comment, string creationTime)
+        public async Task<Change> Create(Guid taskId, string comment)
         {
-            var change = new Change(taskId, comment, creationTime);
+            var change = new Change(taskId, comment);
             var taskFromDb = await _context.Changes.AddAsync(change);
             await _context.SaveChangesAsync();
             return change;
@@ -34,7 +34,7 @@ namespace Reports.Server.Services
             return change;
         }
 
-        public async Task<Change> GetChangeByTime(string creationTime)
+        public async Task<Change> GetChangeByTime(DateTime creationTime)
         {
             Guid resultId = Guid.Empty;
             foreach (Change current in _context.Changes)

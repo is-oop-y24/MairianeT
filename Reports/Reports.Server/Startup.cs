@@ -46,6 +46,8 @@ namespace Reports.Server
             });
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IChangeService, ChangeService>();
+            services.AddScoped<IReportService, ReportService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

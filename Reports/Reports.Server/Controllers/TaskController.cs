@@ -19,10 +19,9 @@ namespace Reports.Server.Controllers
         [HttpPost]
         public async Task<TaskModel> Create(
             [FromQuery] string description, 
-            [FromQuery] Guid employeeId, 
-            [FromQuery] string creationTime)
+            [FromQuery] Guid employeeId)
         {
-            return await _service.Create(description, employeeId, creationTime);
+            return await _service.Create(description, employeeId);
         }
         [HttpGet]
         [Route("/task/all")]
@@ -46,7 +45,7 @@ namespace Reports.Server.Controllers
         
         [HttpGet]
         [Route("/task/time")]
-        public async Task<IActionResult> GetByTime([FromQuery] string creationTime)
+        public async Task<IActionResult> GetByTime([FromQuery] DateTime creationTime)
         {
             return Ok(await _service.GetTaskByTime(creationTime));
         }

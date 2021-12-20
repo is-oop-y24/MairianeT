@@ -17,9 +17,9 @@ namespace Reports.Server.Controllers
             _service = service;
         }
         [HttpPost]
-        public async Task<Change> Create([FromQuery] Guid taskId, [FromQuery] string comment, [FromQuery] string creationTime)
+        public async Task<Change> Create([FromQuery] Guid taskId, [FromQuery] string comment)
         {
-            return await _service.Create(taskId, comment, creationTime);
+            return await _service.Create(taskId, comment);
         }
         [HttpGet]
         [Route("/changes/all")]
@@ -41,7 +41,7 @@ namespace Reports.Server.Controllers
         }
         [HttpGet]
         [Route("/changes/time")]
-        public async Task<IActionResult> GetByTime([FromQuery] string creationTime)
+        public async Task<IActionResult> GetByTime([FromQuery] DateTime creationTime)
         {
             return Ok(await _service.GetChangeByTime(creationTime));
         }

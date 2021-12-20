@@ -5,7 +5,7 @@ namespace Reports.DAL.Entities
 {
     public class Change
     {
-        public string CreationTime { get; private init; }
+        public DateTime CreationTime { get; private init; }
         public Guid Id { get; private init; }
         public string Comment { get; set; }
         public Guid TaskId { get; set; }
@@ -14,10 +14,10 @@ namespace Reports.DAL.Entities
         {
         }
 
-        public Change(Guid taskId, string comment, string time)
+        public Change(Guid taskId, string comment)
         {
             Id = new Guid();
-            CreationTime = time;
+            CreationTime = DateTime.Now;
             TaskId = taskId;
             Comment = comment;
         }
