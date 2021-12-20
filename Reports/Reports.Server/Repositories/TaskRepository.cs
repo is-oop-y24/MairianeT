@@ -18,10 +18,6 @@ namespace Reports.Server.Repositories
         {
             await _context.SaveChangesAsync();
         }
-        public TaskModel FindById(Guid id)
-        {
-            return Enumerable.FirstOrDefault(_context.Tasks, task => task.Id == id);
-        }
 
         public async Task<TaskModel> Find(Guid id)
         {
