@@ -34,10 +34,9 @@ namespace Reports.Server.Services
             return Enumerable.FirstOrDefault(_context.Employees, employee => employee.Name == name);
         }
 
-        public async Task<Employee> FindById(Guid id)
+        public Employee FindById(Guid id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            return employee;
+            return Enumerable.FirstOrDefault(_context.Employees, employee => employee.Id == id);
         }
 
         public DbSet<Employee> GetAll()

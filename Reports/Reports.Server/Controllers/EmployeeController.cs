@@ -44,7 +44,7 @@ namespace Reports.Server.Controllers
 
             if (id != Guid.Empty)
             {
-                Task<Employee> result = _service.FindById(id);
+                Employee result = _service.FindById(id);
                 if (result != null)
                 {
                     return Ok(result);
@@ -72,6 +72,8 @@ namespace Reports.Server.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromQuery] Employee entity)
         {
+            if (entity.Role == EmployeeType.TeamLeader && entity.LeaderId != Guid.Empty)
+                return StatusCode((int) HttpStatusCode.BadRequest);
             await _service.Update(entity);
             return Ok();
         }

@@ -14,10 +14,4 @@
       <ProjectReference Include="..\Reports.DAL\Reports.DAL.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Content Update="employees.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
-
 </Project>

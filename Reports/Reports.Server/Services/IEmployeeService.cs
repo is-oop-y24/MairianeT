@@ -13,7 +13,7 @@ namespace Reports.Server.Services
 
         Employee FindByName(string name);
 
-        Task<Employee> FindById(Guid id);
+        Employee FindById(Guid id);
         DbSet<Employee> GetAll();
 
         Task<Employee> Delete(Guid id);

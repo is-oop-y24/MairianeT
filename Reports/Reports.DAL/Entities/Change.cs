@@ -5,19 +5,21 @@ namespace Reports.DAL.Entities
 {
     public class Change
     {
-        public DateTime CreationTime { get; private init; }
+        public string CreationTime { get; private init; }
         public Guid Id { get; private init; }
-        public ChangeType Type { get; private init; }
+        public string Comment { get; set; }
+        public Guid TaskId { get; set; }
 
         public Change()
         {
         }
 
-        public Change(Guid id, ChangeType type)
+        public Change(Guid taskId, string comment, string time)
         {
-            CreationTime = DateTime.Now;
-            Id = id;
-            Type = type;
+            Id = new Guid();
+            CreationTime = time;
+            TaskId = taskId;
+            Comment = comment;
         }
     }
 }
