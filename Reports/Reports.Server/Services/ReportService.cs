@@ -20,7 +20,6 @@ namespace Reports.Server.Services
         public async Task<Report> Create(Guid ownerId, DateTime startTime, DateTime finishTime)
         {
             var report = new Report(new Guid(), ownerId, startTime, finishTime);
-            var taskFromDb = await _context.Reports.AddAsync(report);
             await _context.SaveChangesAsync();
             return report;
         }

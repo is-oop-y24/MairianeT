@@ -19,7 +19,6 @@ namespace Reports.Server.Services
         public async Task<Change> Create(Guid taskId, string comment)
         {
             var change = new Change(taskId, comment);
-            var taskFromDb = await _context.Changes.AddAsync(change);
             await _context.SaveChangesAsync();
             return change;
         }

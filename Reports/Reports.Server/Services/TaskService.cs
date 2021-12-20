@@ -21,7 +21,6 @@ namespace Reports.Server.Services
         public async Task<TaskModel> Create(string description, Guid employeeId)
         {
             var task = new TaskModel(Guid.NewGuid(), employeeId, description);
-            var taskFromDb = await _context.Tasks.AddAsync(task);
             await _context.SaveChangesAsync();
             return task;
         }
